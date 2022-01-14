@@ -1,0 +1,537 @@
+<div class="loading" style="display:none">Loading&#8230;</div>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="../SiteAssets/css/customTheme.css">
+<link rel="stylesheet" href="../SiteAssets/js/libs/jqueryUI/jquery-ui.min.css">
+<script src="../siteassets/js/controllers/common.js?v=0.007"></script>
+<script src="../SiteAssets/js/controllers/ExpenseRequestView.js?v=0.014"></script>
+<!-- <script>$.getScript("../siteassets/js/controllers/VisaRequestView.js");</script> -->
+<script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment-with-locales.min.js"></script>
+
+
+
+<!-- <script src="../_layouts/15/sp.runtime.js"></script>
+<script src="../_layouts/15/sp.js"></script> -->
+<script src="../_layouts/15/1033/strings.js"></script>
+<script src="../_layouts/15/clienttemplates.js"></script>
+<script src="../_layouts/15/clientforms.js"></script>
+<script src="../_layouts/15/clientpeoplepicker.js"></script>
+<script src="../_layouts/15/autofill.js"></script>
+<script src="../_layouts/15/sp.core.js"></script>
+
+<style>
+    .dol-footer {
+        font-size: 11px !important;
+    }
+
+    .dol-footer .container {
+        width: 100% !important;
+    }
+
+
+    input[type=password][disabled],
+    input[type=text][disabled],
+    input[type=file][disabled],
+    textarea[disabled],
+    select[disabled],
+    .sp-peoplepicker-topLevelDisabled,
+    .ms-inputBoxDisabled {
+        color: black !important;
+    }
+
+    .error {
+        color: #a94442;
+        background-color: #f2dede;
+        border-color: #ebccd1;
+        padding: 1px 20px 1px 20px;
+    }
+
+    .bootbox-close-button {
+        min-width: 15px !important;
+    }
+
+    [type="file"] {
+        height: auto !important;
+    }
+
+    .panelHeadingStyle {
+        height: 14px !important;
+        padding-top: 2px !important;
+    }
+
+    .panel-body {
+        padding-bottom: 12px !important;
+    }
+
+    .container-fluid.dol-footer.s4-notdlg {
+        margin-top: 0px !important;
+    }
+
+    label {
+        font-weight: bold !important;
+    }
+
+    .has-error {
+        border: 1px solid red !important;
+    }
+
+    .navbar {
+        min-height: auto !important;
+    }
+
+    .navbar-nav>li>a {
+        font-size: 11px !important;
+    }
+
+    .checklistItemsDiv label {
+        font-weight: normal !important;
+    }
+
+    .panel {
+        width: 80% !important;
+    }
+
+    .threeCol div:nth-of-type(2),
+    .threeCol div:nth-of-type(3) {
+        padding-left: 7% !important;
+    }
+
+    button{
+        outline: none !important;
+    }
+</style>
+
+<br>
+
+<div class="container divTransferTable">
+    <div class="containerAlignWrapper">
+        <div class="panel panel-default width-90percent" style="border:0px;box-shadow: 0px 0px;">
+            <div class="txt-new-Request" style="padding-left:0px">
+                <span id="requestTypeidentifier"></span>
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent" style="border:0px;box-shadow: 0px 0px">
+            <div class="text-right">
+                <button style="float:left" onclick="backToDashboard()" class="btn btn-primary backButton">Back to
+                    Dashboard</button>
+                <label style="font-size: 17px!important;text-decoration: underline;"><span>Status: </span><span
+                        data-field="Status"></span></label></br>
+                <label id = "actionBy" style="font-size: 17px!important;text-decoration: underline;"></label>
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle">Requestor
+                Details
+            </div>
+            <div class="panel-body panel-body-padding">
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Personal ID <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control " id="practitionerPID" data-field="PID" style="padding-top: 10px;" disabled="disabled">
+                    </div>
+                     
+                    <div class="col-sm-3">
+                        <span data-field="PractitionerId" data-expand="true"></span>
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Requestor
+                            Email ID <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control " id="practitionerPersonnelID" data-field="PractitionerEmail" style="padding-top: 10px;" disabled="disabled">
+                    </div>
+                     
+                    <div class="col-sm-3">
+                        <label for="staticEmail"
+                            class="col-form-label paddingTop paddingBottom font-size15px">Requestor
+                            Name</label>
+                        <input type="text" class="form-control" data-field="PractitionerName" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div>
+                </div>
+
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            Requestor Level </label>
+                        <input type="text" class="form-control" data-field="PractitionerLevel"
+                            style="padding-top: 10px;" disabled="disabled">
+                    </div>
+                     
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            USI
+                            Base Location <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control " id="USIBaseLocation" data-field="USIBaseLocation"
+                            style="padding-top: 10px;" disabled="disabled">
+                        <!-- <select class="form-control dropdownHight disableElement" id="USIBaseLocation" disabled>
+                            <option value="0">Select an option</option>
+                            <option value="Hyderabad">Hyderabad</option>
+                            <option value="Bengaluru">Bengaluru</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Gurgaon">Gurgaon</option>
+                        </select> -->
+                    </div>
+                </div>
+
+                <div class="row threeCol">
+                    <div class="col-sm-3 ">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Portfolio <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control portfolioText" id="portfolio" data-field="Portfolio"
+                        style="padding-top: 10px;" disabled="disabled">
+                    </div>
+                     
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Offering <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control " id="Offering" data-field="Offering" style="padding-top: 10px;" disabled="disabled">
+                    </div>
+                     
+                    <!-- <div class="col-sm-3 marketOffering" style="display:none">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                                Market Offering
+                                <span class="required">*</span>
+                            </label>
+                            <select class="form-control dropdownHight height-40px" id="marketOfferingList" onchange="">
+                                <option value="0">Select an option</option>
+                                <option value="SDE">Systems Design & Engineering</option>
+                                <option value="SDO">Service Delivery Optimization</option>
+                                <option value="AMA">App Modernization and App Architecture</option>
+                                <option value="IS">Integration Services</option>
+                            </select>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle">Expense Details</div>
+            <div class="panel-body panel-body-padding">
+               <!-- <div class="row padding-bottom-20px threeCol radiogroup">
+                    <div class="col-sm-3 lonetype" style="">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px" style="width:240px !important;">
+                            Is the request raised through Ariba? <span class="required">*</span>
+                        </label>
+                        <div>
+                            <label>
+                                <input type="radio" class="form-control" id="AribaRequestY" value="Yes" name="AribaRequest" style="padding-top: 10px;display: inline-block" disabled="disabled"><label class="col-form-label">Yes</label>
+                            </label>
+                            <label>
+                                <input type="radio" class="form-control" id="AribaRequestN" value="No" name="AribaRequest" style="padding-top: 10px;display: inline-block" checked="checked" disabled="disabled"><label class="col-form-label">No</label>
+                            </label>  
+                        </div>   
+                    </div>
+                </div> -->
+
+                <div class="row padding-bottom-20px threeCol">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            WBS Code <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control " id="WBSCodeId" data-field="WBSCode"
+                        style="padding-top: 10px;" disabled="disabled">
+                    </div>      
+                    <div class="col-sm-3 lonetype" style="">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Expense Type
+                            <span class="required">*</span>
+                        </label>
+                        <select class="form-control dropdownHight height-40px" id="ExpenseTypeDropDown" data-field="ExpenseType" onchange="" disabled="disabled">
+                            <option value="0">Select an option</option>
+                            <!-- <option value="LDTE">Travel Expenses for training</option>
+                            <option value="LDAC">Approval for certifications</option>
+                            <option value="BKPC">Books & Publications</option> -->                                                        
+                            <!-- <option value="BUSE">Bus Entertainment</option> -->                                                                                                                
+                            <!-- <option value="GFNE">Gifts Non-employee</option> -->                            
+                            <!-- <option value="CFCT">Cafeteria Costs</option> -->                                                        
+                            <!-- <option value="FPML">Firm Provided Meals</option>
+                            <option value="MLOT">Meals-Overtime</option>
+                            <option value="PKAW">Parking-Auto Weekend</option>
+                            <option value="PRKL">Parking-Local</option> -->                            
+                            <!-- <option value="REML">Recr Exp - Meals</option>
+                            <option value="TRPN">Trans-Personne</option> -->                            
+                            <!-- <option value="PRCP">Printing & Copying</option> -->                            
+                            <option value="TREA">Travel Exp-Airline</option>
+                            <option value="MCPN">Moving Cost-Persnl</option>
+                            <option value="TRHL">Traveling Exp-Hotel</option>
+                            <option value="IMGF">Intl Immigration Fee</option>
+                            <option value="TRSD">Trvl Exp-Sp & Dep</option>
+                            <option value="MVTE">Moving-Trv Exp</option>
+                            <option value="TRET">Travel Expenses-Taxi</option>
+                            <option value="STWF">Staff Welfare USI</option>
+                            <option value="BUML">Business Meals</option>
+                            <option value="TRPD">Trvl Exp-Per Diem</option>
+                            <option value="TRRC">Travel Exp-Rental Ca</option>  
+                            <option value="OFSL">Office Supplies</option>      
+                            <option value="PHEX">Physical Exams</option>     
+                            <option value="TRHT">Trvl Exp-HotelTax</option>      
+                            <option value="FPRE">Firm Provi Rec Ent</option>     
+                            <option value="CMCO">Computer Costs-Other</option>   
+                            <option value="TRME">Trvl Exp-Meal Exp</option> 
+                            <option value="FPMO">Firm Prov Mls In Off</option>
+                            <option value="TRCS">Trvl Exp-Car Svc/Lmo</option>
+                            <option value="SMRG">Seminar Registration</option>
+                            <option value="TRIT">Trvl Exp-InbIntl Tem</option>
+                            <option value="CPUC">CPU Costs HostingSvs</option>
+                            <option value="TRTL">Trvl Exp-Temp Living</option>
+                            <option value="TRAA">Trvl Exp- Air Alt</option>
+                            <option value="TRMC">Traveling Exp-Misc</option>                                                                                    
+                            <!-- <option value="TRAF">Trvl Exp-Agency Fee</option>
+                            <option value="TRBF">Trvl Exp-Air Bag Fee</option>
+                            <option value="TRAH">Trvl Exp-Air/Htl Cl</option>
+                            <option value="TRAC">Trvl Exp-Alcohol Fed</option> -->                            
+                            <!-- <option value="TRCG">Trvl Exp-CarRent Gas</option>
+                            <option value="TRFP">Trvl Exp-Fed PerDiem</option>
+                            <option value="TRHC">Trvl Exp-Health Club</option>
+                            <option value="TRHI">Trvl Exp-Hot Int A</option> -->                                                                                                                
+                            <!-- <option value="TRPH">Trvl Exp-Phone</option>
+                            <option value="TRPK">Trvl Exp-Pking</option>
+                            <option value="TRCA">Trvl Exps-Corp Apt</option>                             -->                                                        
+                            <!-- <option value="TRTP">Trvl Exp-Tips</option>
+                            <option value="TRTO">Trvl Exp-Tolls</option>
+                            <option value="TROG">TrvlExp-Oth Grnd Trn</option> -->
+                        </select>
+                    </div>                
+                   
+                    <div class="col-sm-3 ">
+    					<label class="col-form-label paddingTop paddingBottom font-size15px">
+	    					Expense Date
+		    				<span class="required">*</span>
+			    		</label>
+				    	<input type="text" maxlength="10" placeholder="mm/dd/yyyy" class="form-control " id="ExpenseDate" data-field="ExpenseDate"
+					    style="padding-top: 10px;" disabled="disabled">
+				    </div>
+                </div>
+
+                <div class="row padding-bottom-20px threeCol">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Estimated Expense Amount(INR) <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control " id="EstimatedExpenseAmount" data-field="EstimatedExpenseAmount"
+                        style="padding-top: 10px;" disabled="disabled">
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Expense Reason <span class="required">*</span>
+                        </label>
+                        <textarea type="text" class="form-control " id="ExpenseReason" data-field="ExpenseReason"
+                        style="padding-top: 10px; width: -webkit-fill-available;" maxlength="255" disabled="disabled"></textarea>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                           Project / Thread / Initiative Lead<span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control" data-expand="true" data-field="ThreadorInitiativeLeadId" id="currClientName" style="padding-top: 10px;" disabled="disabled">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+		
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle">Approver Details</div>
+            <div class="panel-body panel-body-padding">
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Talent
+                            Group Leader<span class="required">*</span></label>
+                            <input disabled="disabled" type="text" class="form-control" data-expand="true" data-field="TalentGroupLeadId"
+                            style="padding-top: 10px;">
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Offering
+                            Lead<span class="required">*</span></label>
+                        <input type="text" class="form-control " id="offeringLead" data-expand="true" data-field="OfferingLeadId"
+                        style="padding-top: 10px;" disabled="disabled">
+                        <inut type="hidden" id="offeringLeadId" />
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Portfolio Lead <span class="required">*</span></label>
+                        <input type="text" class="form-control " id="portfolioLead" data-expand="true" data-field="PortfolioLeadId"
+                        style="padding-top: 10px;" disabled="disabled">
+                        <input type="hidden" id="portfolioLeadId" value="">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent uploadpanel">
+            <div class="panel-heading panelHeadingStyle">Upload Documents</div>
+            <div class="panel-body panel-body-padding">
+                <div class="row">
+                    <div class="col-md-11" style="padding-left:20px">
+                        <div>
+                            <label>
+                                <!-- <input data-field="ChecklistItems" type="checkbox" checked="checked" disabled="disabled"
+                                    value="chk1" />   -->
+                                    Approval from Thread / Initiative Lead for this expense
+                             </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 attachments" style="padding:10px">
+                    </div>
+                </div>
+            </div>
+        </div>		
+		
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle">Approval/Rejection Comments</div>
+            <div class="panel-body panel-body-padding">
+                <div class="row">
+                    <div class="col-md-10" style="padding:10px">
+                        <textarea disabled="disabled" id="comments" class="form-control" style="width:100%"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default width-90percent" style="border:0px;box-shadow: 0px 0px">
+            <div class="text-right">
+                <button style="float:left" onclick="backToDashboard()" class="btn btn-primary backButton">Back to
+                    Dashboard</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+    <!-- css Loader -->
+    <style>
+        /* Absolute Center Spinner */
+        .loading {
+            position: fixed;
+            z-index: 999;
+            height: 2em;
+            width: 2em;
+            overflow: visible;
+            margin: auto;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+        /* Transparent Overlay */
+        .loading:before {
+            content: '';
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* :not(:required) hides these rules from IE9 and below */
+        .loading:not(:required) {
+            /* hide "loading..." text */
+            font: 0/0 a;
+            color: transparent;
+            text-shadow: none;
+            background-color: transparent;
+            border: 0;
+        }
+
+        .loading:not(:required):after {
+            content: '';
+            display: block;
+            font-size: 10px;
+            width: 1em;
+            height: 1em;
+            margin-top: -0.5em;
+            -webkit-animation: spinner 1500ms infinite linear;
+            -moz-animation: spinner 1500ms infinite linear;
+            -ms-animation: spinner 1500ms infinite linear;
+            -o-animation: spinner 1500ms infinite linear;
+            animation: spinner 1500ms infinite linear;
+            border-radius: 0.5em;
+            -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+            box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+        }
+
+        /* Animation */
+
+        @-webkit-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @-moz-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @-o-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    </style>

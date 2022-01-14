@@ -1,0 +1,793 @@
+<div class="loading" style="display:none">Loading&#8230;</div>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="../SiteAssets/css/customTheme.css">
+<link rel="stylesheet" href="../SiteAssets/js/libs/jqueryUI/jquery-ui.min.css">
+<script src="../siteassets/js/controllers/common.js?v=0.007"></script>
+<script src="../SiteAssets/js/controllers/TalentApprovalPage.js?v=0.90"></script>
+<!-- <script>$.getScript("../siteassets/js/controllers/VisaApprovalPage.js");</script> -->
+<link type="text/css" href="../SiteAssets/css/PageCommon.css" rel="stylesheet" />
+
+<style>
+
+     /* for desktop */
+     @media only screen and (min-width: 820px) {
+        .small-devices {display: none;}
+        .short-text { display: none; }
+        .button-approve{margin-left:5%}
+        .button-reject{margin-left:5%}
+        .button-bk-dashboard{float:left}
+        .button-more-info{margin-left:5%;float:left}
+
+        .button-top-approve{margin-left:40px}
+        .button-top-reject{margin-left:40px}
+        .button-top-bk-dashboard{float:left}
+
+        .small-devices-a {display: none;}
+        /* .large-devices-a { display: inline; }    */
+
+        .threeCol div:nth-of-type(2),
+        .threeCol div:nth-of-type(3) {
+            padding-left: 7% !important;
+        }
+
+        /*people picker stype only for desktop*/
+        /* .peoplepicker-style{width: 200px !important; margin-right: -110px;} */
+        
+    }
+
+    /* for mobile devices */
+    @media only screen and (max-width: 820px) {
+        
+        .small-device-panel{
+        display:none;
+        }
+
+        /* .short-text { display: inline-block; } */
+        .full-text { display: none; }
+        .button-approve{float:right; margin-top: 2%;}
+        .button-reject{float:left; margin-top: 2%;}
+        .button-bk-dashboard{float:left; margin-top: 2%;}
+        .button-more-info{float:right; margin-top: 2%;}
+
+        .button-top-approve{margin-top: 2%}
+        .button-top-reject{margin-left: 2%;margin-top: 2%}
+        .button-top-bk-dashboard{float:left;margin-right:2%;margin-top: 2%}
+
+        /* .small-devices-a {display: inline;} */
+        .large-devices-a { display: none; }
+
+        .small-devices-fields {width: 90% !important;}
+
+        /*for mobile of peoplepicker*/
+        /* .sp-peoplepicker-topLevel{width: 100% !important;} */
+        
+    }
+
+
+    .dol-footer {
+        font-size: 11px !important;
+    }
+
+    .dol-footer .container {
+        width: 100% !important;
+    }
+
+    input[type=password][disabled],
+    input[type=text][disabled],
+    input[type=file][disabled],
+    textarea[disabled],
+    select[disabled],
+    .sp-peoplepicker-topLevelDisabled,
+    .ms-inputBoxDisabled {
+        color: black !important;
+    }
+
+    .error {
+        color: #a94442;
+        background-color: #f2dede;
+        border-color: #ebccd1;
+        padding: 1px 20px 1px 20px;
+    }
+
+    .bootbox-close-button {
+        min-width: 15px !important;
+    }
+
+    [type="file"] {
+        height: auto !important;
+    }
+
+    .panelHeadingStyle {
+        height: 14px !important;
+        padding-top: 2px !important;
+    }
+
+    .panel-body {
+        padding-bottom: 12px !important;
+    }
+
+    .container-fluid.dol-footer.s4-notdlg {
+        margin-top: 0px !important;
+    }
+
+    label {
+        font-weight: bold !important;
+    }
+
+    .has-error {
+        border: 1px solid red !important;
+    }
+
+    input[type="text"][disabled] {
+        color: black !important;
+    }
+
+    .paddingTop {
+        padding-top: 10px;
+    }
+
+    .checklistItemsDiv label {
+        font-weight: normal !important;
+    }
+
+    .panel {
+        width: 80% !important;
+    }
+
+    /* .threeCol div:nth-of-type(2),
+    .threeCol div:nth-of-type(3) {
+        padding-left: 7% !important;
+    } */
+    .required {
+        color: red;
+    }
+</style>
+<br>
+<div class="container divTransferTable" style="display:none">
+    <div class="containerAlignWrapper">
+        <div class="panel panel-default width-90percent" style="border:0px;box-shadow: 0px 0px">
+            <div class="txt-new-Request" style="padding-left:0px">
+                <span id="requestTypeidentifier"></span>
+            </div>
+        </div>
+        <!-- <div class="panel panel-default width-90percent" style="border:0px;box-shadow: 0px 0px">
+            <div class="text-right">
+                <button style="float:left" onclick="backToDashboard()" class="btn btn-primary">Back to
+                    Dashboard</button>
+                
+                <button style="margin-left:40px" onclick="takeAction()"
+                    class="btn btn-primary actionButtons">Reject</button>
+                <button style="margin-left:40px" onclick="takeAction(true)"
+                    class="btn btn-primary actionButtons">Approve</button>
+            </div>
+            <a id="approvalHistory" style="float:right;margin-left:40px; margin-top:15px" href="#"><b><u>Approval History</u></b></a>
+        </div> -->
+
+        <div class="panel panel-default width-90percent" style="border:0px;box-shadow: 0px 0px">
+            <div class="text-right">
+                <button onclick="backToDashboard()" class="btn btn-primary button-top-bk-dashboard">Back to Dashboard</button>
+                <button onclick="takeAction()" class="btn btn-primary actionButtons button-top-reject">Reject</button>
+                <a id="approvalHistoryMobile" class="small-devices-a" style="float:left; margin-top:20px" href="#"><b><u>Approval History</u></b></a>
+                <button onclick="takeAction(true)" class="btn btn-primary actionButtons button-top-approve">Approve</button>
+            </div>
+            <a id="approvalHistory" class="large-devices-a" style="float:right;margin-left:40px; margin-top:15px" href="#"><b><u>Approval History</u></b></a>
+        </div>
+
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle"><i class="glyphicon glyphicon-minus expander small-devices" onclick="togglePanel(this)"></i>&nbsp;Practitioner Details</div>
+            <div class="panel-body panel-body-padding">
+                <div class="row threeCol">
+                    <!-- <div class="col-sm-3 PersonalID">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Personal
+                            ID</label>
+                        <input type="text" class="form-control" data-field="PID" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div> -->
+                    <div class="col-sm-3">
+                        <span data-field="PractitionerId" data-expand="true"></span>
+                        <label for="staticEmail"
+                            class="col-form-label paddingTop paddingBottom font-size15px">Practitioner
+                            Email ID </label>
+                        <input type="text" class="form-control" data-field="PractitionerEmail"
+                            style="padding-top: 10px;" disabled="disabled">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail"
+                            class="col-form-label paddingTop paddingBottom font-size15px">Practitioner
+                            Name</label>
+                        <input type="text" class="form-control" data-field="PractitionerName" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            Practitioner Level </label>
+                        <input type="text" class="form-control" data-field="PractitionerLevel"
+                            style="padding-top: 10px;" disabled="disabled">
+                    </div>
+                </div>
+
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px"> USI
+                            Base Location </label>
+                        <input type="text" class="form-control" data-field="USIBaseLocation" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Date of Hire<span class="required">*</span> </label>
+                        <input type="text" class="form-control" id = "DateOfHire" data-field="DateOfHire" placeholder="mm/dd/yyyy"
+                            style="padding-top: 10px;">
+                    </div>
+                </div>
+
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            Portfolio </label>
+                        <input type="text" class="form-control" data-field="Portfolio" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Offering
+                        </label>
+                        <input type="text" class="form-control" data-field="Offering" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div>
+                    <div class="col-sm-3">
+                        <!-- <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Talent
+                            Business Advisor</label>
+                        <input type="text" class="form-control" data-field="TalentTeamPersonId" data-expand="true"
+                            style="padding-top: 10px;" disabled="disabled"> -->
+
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Talent
+                            Business Advisor<span class="required">*</span><i data-helpinfo="TBA" data-placement="right"
+                                data-original-title="Talent Business Advisors for your respective Offerings" class="fa fa-question-circle"
+                                aria-hidden="true" style="padding-left: 15px;font-size: 17px;"></i></label>
+
+                        <select class="form-control dropdownHight height-40px small-devices-fields" id="talentLeadList" data-field="TalentTeamPersonId" onchange="">
+                            <option value="0">Select an option</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <!-- <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            Resource Manager</label>
+                        <input type="text" class="form-control" data-field="resourceManagerList" style="padding-top: 10px;"
+                            disabled="disabled"> -->
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Resource Manager
+                            <span class="required">*</span>
+                            <i class="fa fa-question-circle" aria-hidden="true"
+                                style="padding-left: 15px;font-size: 17px;" data-helpinfo="RM" data-placement="right"
+                                data-original-title="Please select your Resource Managers as per your skillset within your Offering/Talent Group"></i>
+                        </label>
+                        <select class="form-control dropdownHight height-40px small-devices-fields" id="resourceManagerList" data-field="ResourceManagerId" onchange="">
+                            <option value="0">Select an option</option>
+
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <!-- <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Talent ES
+                        </label>
+                        <input type="text" class="form-control" data-field="talentEsList" style="padding-top: 10px;"
+                            disabled="disabled"> -->
+
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Talent Engagement Specialist
+                            <span class="required">*</span>
+                            <i class="fa fa-question-circle" aria-hidden="true"
+                                style="padding-left: 15px;font-size: 17px;" data-helpinfo="ES" data-placement="right"
+                                data-original-title="Please select your Talent Es as per your skillset within your Offering/Talent Group"></i>
+                        </label>
+                        <select class="form-control dropdownHight height-40px small-devices-fields" id="talentEsList" data-field="TalentESId" onchange="">
+                            <option value="0">Select an option</option>
+
+                        </select>
+                    </div>
+                </div>
+
+                <!-- <div class="row">
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Resource
+                            Manager</label>
+                        <input type="text" class="form-control" data-field="resourceManagerDetailsId" data-expand="true"
+                            style="padding-top: 10px;" disabled="disabled">
+
+                    </div>
+                </div> -->
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle"><i class="glyphicon glyphicon-plus expander small-devices" onclick="togglePanel(this)"></i>&nbsp;Leave Request</div>
+            <div class="panel-body panel-body-padding small-device-panel">
+                <div class="row threeCol">
+                    <div class="col-sm-7">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Leave Type</label>
+                        <input type="text" class="form-control TypeOfRequest" id = "RequestTypeDropDown" data-field="RequestType" style="padding-top: 10px;"
+                            disabled="disabled" />
+                    </div>
+                </div>
+                <div class="row threeCol">
+                    <div class="col-sm-3 StartDate">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Start Date<span class="required">*</span></label>
+                        <input type="text" class="form-control" data-field="StartDate" id = "StartDate" style="padding-top: 10px;">
+                    </div>                    
+                    <div class="col-md-3 EndDate">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">End Date<span class="required">*</span></label>
+                        <input type="text" class="form-control" data-field="EndDate" id = "EndDate" style="padding-top: 10px;">
+                    </div>
+                </div>
+
+                <div class="row threeCol">
+                    <div class="col-sm-3 RevokeResignationDate">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Revoke Resignation Date<span class="required">*</span></label>
+                        <input type="text" class="form-control" data-field="RevokeResignationDate" id = "RevokeResignationDate" style="padding-top: 10px;"
+                        disabled="disabled" />
+                    </div>                    
+                </div>
+
+                <div class="row threeCol">
+                    <div class="col-sm-7 Reason">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Reason<span class="required">*</span></label>
+                        <textarea type="text" class="form-control small-devices-fields" data-field="Reason" id = "Reason"
+                            style="padding-top: 10px;"></textarea>
+                    </div>                                        
+                </div>
+                <div class="row threeCol">
+                    <div class="col-sm-3 CurrentLWD">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Current Last Working Day<span class="required">*</span></label>
+                        <input type="text" class="form-control" data-field="CurrentLWD" id = "CurrentLWD" style="padding-top: 10px;">
+                    </div>                    
+                    <div class="col-md-3 ProposedLWD">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Proposed Last Working Day<span class="required">*</span></label>
+                        <input type="text" class="form-control" data-field="ProposedLWD" id = "ProposedLWD" style="padding-top: 10px;">
+                    </div>
+                </div>
+                <!-- <div class="row ">
+                    <div class="col-md-10 ">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Business
+                            Case </label>
+                        <textarea type="text" class="form-control" data-field="Businesscase"
+                            style="padding-top: 10px;"></textarea>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+
+
+        <!-- <div class="panel panel-default width-90percent ">
+            <div class="panel-heading panelHeadingStyle">Sponsor Details</div>
+            <div class="panel-body panel-body-padding">
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Client
+                            Name</label>
+                        <input type="text" class="form-control" data-field="ClientName" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Project
+                            Name</label>
+                        <input type="text" class="form-control" data-field="newProjectName" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Current
+                            Location</label>
+                        <input disabled="disabled" type="text" class="form-control" data-field="PractitionerLocation"
+                            style="padding-top: 10px;">
+                    </div>
+                </div>
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">US
+                            Destination Region</label>
+                        <input disabled="disabled" type="text" class="form-control" data-field="CurrentProjectLocation"
+                            style="padding-top: 10px;">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Deloitte
+                            US Office</label>
+                        <input disabled="disabled" type="text" class="form-control" data-field="DeloitteUSOffice"
+                            style="padding-top: 10px;">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail"
+                            class="col-form-label paddingTop paddingBottom font-size15px">Zipcode</label>
+                        <input disabled="disabled" type="text" class="form-control" data-field="USZipCode"
+                            style="padding-top: 10px;">
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-10" style="padding-top: 15px;">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            Client Address</label>
+                        <textarea disabled="disabled" type="text" class="form-control"
+                            data-field="ClientAddress" style="padding-top: 10px;height: 80px;"></textarea>
+                    </div>
+                </div>
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px"> US
+                            PPMD</label>
+                        <input type="text" class="form-control" data-expand="true" data-field="USPPMDId"
+                            style="padding-top: 10px;" disabled="disabled">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">USI
+                            Project Leader</label>
+                        <input type="text" class="form-control" data-expand="true" data-field="USIPPMDId"
+                            style="padding-top: 10px;" disabled="disabled">
+                    </div>
+                </div>
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Start
+                            Date</label>
+                        <input maxlength="10" maxlength="10" placeholder="mm/dd/yyyy" disabled="disabled" type="text"
+                            class="form-control" data-field="StartDate" style="padding-top: 10px;" />
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">End
+                            Date</label>
+                        <input maxlength="10" placeholder="mm/dd/yyyy" disabled="disabled" type="text"
+                            class="form-control" data-field="EndDate" style="padding-top: 10px;" />
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail"
+                            class="col-form-label paddingTop paddingBottom font-size15px">Assignment Type</label>
+                        <input disabled="disabled" type="text" class="form-control" data-field="AssignmentType"
+                            style="padding-top: 10px;" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10" style="padding-top:20px">
+                        <label>Has the Employee ever travelled to US for Deloitte in any status other that B1
+                            Visitor? </label>
+                    </div>
+                    <div class="col-md-5">
+                        <label><input type="radio" disabled="disabled" data-field="HasEverTravelledToUS"
+                                value="Yes" />Yes</label>
+                        <label><input type="radio" disabled="disabled" data-field="HasEverTravelledToUS"
+                                value="No" />No</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10" style="padding-top:20px">
+                        <label>Is the initiation for a new work site to be added to an existing Deloitte H-1 or E-3
+                            petition (Select Yes if practitioner already holds H1 and travelling to other location than
+                            the one filed at the time of petition)?</label>
+                    </div>
+                    <div class="col-md-5">
+                        <label><input type="radio" disabled="disabled" data-field="ShouldAddNewWorkSite"
+                                value="Yes" />Yes</label>
+                        <label><input type="radio" disabled="disabled" data-field="ShouldAddNewWorkSite"
+                                value="No" />No</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-10" style="padding-top: 15px;">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Onsite
+                            Roles and Responsibilities</label>
+                        <textarea disabled="disabled" type="text" class="form-control"
+                            data-field="OnsiteRolesandResponsibilities" style="padding-top: 10px;"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle"><i class="glyphicon glyphicon-plus expander small-devices" onclick="togglePanel(this)"></i>&nbsp;Business Approvers</div>
+            <div class="panel-body panel-body-padding small-device-panel">
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <!-- <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Talent
+                            Group Leader</label>
+                        <input disabled="disabled" type="text" class="form-control" data-expand="true"
+                            data-field="TalentGroupLeadId" style="padding-top: 10px;"> -->
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Talent
+                            Group Leader<span class="required">*</span><i data-helpinfo="TGL" data-placement="right"
+                                data-original-title="Talent Group Leaders (TGL) for your respective Offerings" class="fa fa-question-circle"
+                                aria-hidden="true" style="padding-left: 15px;font-size: 17px;"></i></label>
+                        <select class="form-control dropdownHight height-40px small-devices-fields" data-field="TalentGroupLeadId" id="talentGroupLeaderList" onchange="">
+                            <option value="0">Select an option</option>
+    
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Offering
+                            Lead</label>
+                        <input type="text" class="form-control" data-expand="true" data-field="OfferingLeadId" id = "offeringLeadId"
+                            style="padding-top: 10px;" disabled="disabled">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            Portfolio Lead </label>
+                        <input type="text" class="form-control" data-expand="true" data-field="PortfolioLeadId" id ="portfolioLeadId"
+                            style="padding-top: 10px;" disabled="disabled">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent uploadpanel">
+            <div class="panel-heading panelHeadingStyle"><i class="glyphicon glyphicon-plus expander small-devices" onclick="togglePanel(this)"></i>&nbsp;Uploaded Approvals</div>
+            <div class="panel-body panel-body-padding small-device-panel">
+                <!-- <div class="row">
+                    <div class="col-md-11 checklistItemsDiv" style="padding-left:30px">
+                        <div><label><input data-field="ChecklistItems" style="margin-right:10px!important"
+                                    type="checkbox" disabled="disabled" value="chk1" />USI MD & US PPD approval
+                                confirming the project duration( 6 months for resources currently at Onsite & 9 months
+                                for resources at offshore)</label></div>
+                        <div><label><input data-field="ChecklistItems" style="margin-right:10px!important"
+                                    type="checkbox" disabled="disabled" value="chk2" />Exception approval from Offering
+                                Lead on the Tenure( less than 2 years with the Firm)</label></div>
+                        <div><label><input data-field="ChecklistItems" style="margin-right:10px!important"
+                                    type="checkbox" disabled="disabled" value="chk3" />Exception approval from Offering
+                                Lead on the duration of the project( 6 months for resources currently at Onsite & 9
+                                months for resources at offshore)</label></div>
+                        <div><label><input data-field="ChecklistItems" style="margin-right:10px!important"
+                                    type="checkbox" disabled="disabled" value="chk4" />Exception approval from Offering
+                                Lead on the level (Less than Career level 3- Consultant)</label></div>
+                        <div><label><input data-field="ChecklistItems" style="margin-right:10px!important"
+                                    type="checkbox" disabled="disabled" value="chk5" />Exception approval from Offering
+                                Lead on Premium Processing</label></div>
+                    </div>
+                </div> -->
+                <div class="row">
+                    <div class="col-md-8 attachments" style="padding:10px">
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-8" style="padding:10px">
+                        <input type="file" id="uploadapproval1" class="uploadElement" style="display:inline-block;width:70%" accept="application/pdf" />
+                        <span style="display:none;color: red;vertical-align: middle;" class="glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8" style="padding:10px">
+                        <input type="file" id="uploadapproval2" class="uploadElement" style="display:inline-block;width:70%" accept="application/pdf" />
+                        <span style="display:none;color: red;vertical-align: middle;" class="glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8" style="padding:10px">
+                        <input type="file" id="uploadapproval3" class="uploadElement" style="display:inline-block;width:70%" accept="application/pdf" />
+                        <span style="display:none;color: red;vertical-align: middle;" class="glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8" style="padding:10px">
+                        <input type="file" id="uploadapproval4" class="uploadElement" style="display:inline-block;width:70%" accept="application/pdf" />
+                        <span style="display:none;color: red;vertical-align: middle;" class="glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8" style="padding:10px">
+                        <input type="file" id="uploadapproval5" class="uploadElement" style="display:inline-block;width:70%" accept="application/pdf" />
+                        <span style="display:none;color: red;vertical-align: middle;" class="glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                </div>
+                <div class="row" style="padding:10px">
+                    <i style="font-size: 1rem">* Maximum of 5 PDF files can be selected with each file size not more
+                        than 3MB.</i>
+                </div>
+
+
+            </div>
+        </div>
+
+        <!-- <div class="panel panel-default width-90percent eligibilityCriteriaPanel">
+            <div class="panel-heading panelHeadingStyle">&nbsp;Eligibility Criteria</div>
+            <div class="panel-body panel-body-padding">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div>
+                            <label>
+                                <input type="checkbox" value="elig1" data-field="EligibilityCriteriaItems"> Performance
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="checkbox" value="elig2" data-field="EligibilityCriteriaItems"> Duration
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="checkbox" value="elig3" data-field="EligibilityCriteriaItems"> Onsite
+                                Deployment
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="checkbox" data-field="ExceptionFlag"> Flag as Exception
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10" style="padding:10px">
+                        <textarea id="exceptionComments" placeholder="Exception Comments" disabled="disabled"
+                            data-field="ExceptionComments" class="form-control" style="width:100%"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle"><i class="glyphicon glyphicon-plus expander small-devices" onclick="togglePanel(this)"></i>&nbsp;Approval/Rejection Reason</div>
+            <div class="panel-body panel-body-padding small-device-panel">
+                <div class="row" id="previousComments">
+                </div>
+                <div class="row">
+                    <div class="col-md-10" style="padding:10px">
+                        <textarea id="comments" class="form-control small-devices-fields" style="width:100%"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="panel panel-default width-90percent" style="border:0px;box-shadow: 0px 0px">
+            <!-- <div class="text-right">
+                <button style="float:left" onclick="backToDashboard()" class="btn btn-primary">Back to
+                    Dashboard</button>
+                <button style="margin-left:40px;float:left" onclick="requestMoreInfo()"
+                    class="moreinfo btn btn-primary actionButtons"><span
+                        class="glyphicon glyphicon-share-alt"></span><span>Request More Information</span></button>
+                <button style="margin-left:40px" onclick="takeAction()"
+                    class="btn btn-primary actionButtons">Reject</button>
+                <button style="margin-left:40px" onclick="takeAction(true)"
+                    class="btn btn-primary actionButtons">Approve</button>
+
+            </div> -->
+            <div class="text-right">
+                <button onclick="backToDashboard()" class="btn btn-primary button-bk-dashboard">Back to Dashboard</button>
+                <button onclick="requestMoreInfo()" class="moreinfo btn btn-primary actionButtons button-more-info full-text"><span
+                    class="glyphicon glyphicon-share-alt"></span><span>Request More Information</span></button>
+                <button onclick="requestMoreInfo()" class="moreinfo btn btn-primary actionButtons button-more-info short-text"><span
+                    class="glyphicon glyphicon-share-alt"></span><span>Request More Info</span></button>
+                <button onclick="takeAction()" class="btn btn-primary actionButtons button-reject">Reject</button>
+                <button onclick="takeAction(true)" class="btn btn-primary actionButtons button-approve">Approve</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- css Loader -->
+    <style>
+        /* Absolute Center Spinner */
+        .loading {
+            position: fixed;
+            z-index: 999;
+            height: 2em;
+            width: 2em;
+            overflow: visible;
+            margin: auto;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+        /* Transparent Overlay */
+        .loading:before {
+            content: '';
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* :not(:required) hides these rules from IE9 and below */
+        .loading:not(:required) {
+            /* hide "loading..." text */
+            font: 0/0 a;
+            color: transparent;
+            text-shadow: none;
+            background-color: transparent;
+            border: 0;
+        }
+
+        .loading:not(:required):after {
+            content: '';
+            display: block;
+            font-size: 10px;
+            width: 1em;
+            height: 1em;
+            margin-top: -0.5em;
+            -webkit-animation: spinner 1500ms infinite linear;
+            -moz-animation: spinner 1500ms infinite linear;
+            -ms-animation: spinner 1500ms infinite linear;
+            -o-animation: spinner 1500ms infinite linear;
+            animation: spinner 1500ms infinite linear;
+            border-radius: 0.5em;
+            -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+            box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+        }
+
+        /* Animation */
+
+        @-webkit-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @-moz-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @-o-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    </style>

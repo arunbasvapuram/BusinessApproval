@@ -1,0 +1,537 @@
+<div class="loading" style="display:none">Loading&#8230;</div>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="../SiteAssets/css/customTheme.css">
+<script src="../siteassets/js/controllers/common.js?v=0.007"></script>
+<script src="../SiteAssets/js/controllers/TransferRequestView.js?v=0.10"></script>
+<!-- <script>$.getScript("../siteassets/js/controllers/TransferRequestView.js?v=0.1");</script> -->
+<link type="text/css" href="../SiteAssets/css/PageCommon.css" rel="stylesheet" />
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
+
+
+
+<script src="../_layouts/15/1033/strings.js"></script>
+<script src="../_layouts/15/clienttemplates.js"></script>
+<script src="../_layouts/15/clientforms.js"></script>
+<script src="../_layouts/15/clientpeoplepicker.js"></script>
+<script src="../_layouts/15/autofill.js"></script>
+<script src="../_layouts/15/sp.core.js"></script>
+
+<style>
+
+    .dol-footer{
+        font-size:11px!important;
+    }
+    .dol-footer .container{
+        width:100%!important;
+    }
+    .panel{
+        width: 80% !important;
+    }
+    .threeCol div:nth-of-type(2),
+    .threeCol div:nth-of-type(3) {
+        padding-left: 7% !important;
+    }
+    
+    .usiTransferElements{
+    display: none;
+}
+    input[type=password][disabled], input[type=text][disabled], input[type=file][disabled], textarea[disabled], select[disabled], .sp-peoplepicker-topLevelDisabled, .ms-inputBoxDisabled {    
+    color: black!important;
+    }
+    .error {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  padding:1px 20px 1px 20px;
+}
+
+.bootbox-close-button{
+   min-width: 15px!important;
+}
+
+[type="file"]{
+height:auto!important;
+}
+.panelHeadingStyle{
+    height:14px!important;
+    padding-top:2px!important;
+}
+.panel-body{
+    padding-bottom: 12px!important;
+}
+.container-fluid.dol-footer.s4-notdlg{
+    margin-top:0px!important;
+}
+
+label{
+    font-weight: bold!important;
+}
+
+.has-error{
+    border:1px solid red!important;
+}
+</style>
+
+<br>
+<div class="container divTransferTable" style="display:none">
+     <div class="containerAlignWrapper">
+        <div class="panel panel-default width-90percent" style="border:0px;box-shadow: 0px 0px">
+            <div class="txt-new-Request" style="padding-left:0px">
+                <span id="requestTypeidentifier"></span>
+            </div>
+        </div>
+        <div class="panel panel-default width-90percent" style="border:0px;box-shadow: 0px 0px">
+            <div class="text-right">
+                <button style="float:left" onclick="backToDashboard()" class="btn btn-primary backButton">Back to Dashboard</button>
+                <label style="font-size: 17px!important;text-decoration: underline;"><span>Status: </span><span
+                        data-field="Status"></span></label></br>
+                <label id = "actionBy" style="font-size: 17px!important;text-decoration: underline;"></label>
+                
+            </div>
+
+        </div>
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle">Practitioner Details</div>
+            <div class="panel-body panel-body-padding">
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <span data-field="practitionerDetailsId" data-expand="true"></span>
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Practitioner
+                            Email ID </label>
+                        <input type="text" class="form-control" data-field="PractitionerEmail" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div>
+                   
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Practitioner
+                            Name</label>
+                        <input type="text" class="form-control" data-field="PractitionerName" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            Practitioner Level </label>
+                        <input type="text" class="form-control" data-field="PractitionerLevel" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div>
+                </div>
+
+                <div class="row threeCol">
+                   
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px"> USI
+                            Base Location </label>
+                        <input type="text" class="form-control" data-field="USIBaseLocation" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            Portfolio </label>
+                        <input type="text" class="form-control" data-field="Portfolio" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div>
+                   
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Offering
+                        </label>
+                        <input type="text" class="form-control" data-field="Offering" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Date of Hire </label>
+                        <input type="text" class="form-control" data-field="DateOfHire" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle">Talent and RM</div>
+            <div class="panel-body panel-body-padding">
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Talent
+                            Business Advisor</label>
+                        <input type="text" class="form-control" data-field="talentTeamPersonDetailsId" data-expand="true"
+                            style="padding-top: 10px;" disabled="disabled">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Resource
+                            Manager</label>
+                        <input type="text" class="form-control" data-field="resourceManagerDetailsId" data-expand="true"
+                            style="padding-top: 10px;" disabled="disabled">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle">Transfer Request</div>
+            <div class="panel-body panel-body-padding">
+                <input type="hidden" id="hdnPractitionerIdTransfer" />
+                <input type="hidden" id="hdnPractitionerLocationTransfer" />
+                <input type="hidden" id="practitionerBusinessLineTransfer" />
+                <div class="row notUsiTransferElements">
+                    <div class="col-md-6">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px"> Reason
+                            for transfer </label>
+                        <textarea disabled="disabled" type="text" class="form-control" data-field="ReasonForTransfer"
+                            style="padding-top: 10px;" maxlength="255"></textarea>
+                    </div>
+                </div>
+                <div class="row usiTransferElements">
+                    <div class="col-md-6">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px businesscaselabel">Business
+                            Case</label>
+                        <textarea type="text" class="form-control" data-field="ReasonForTransfer" style="padding-top: 10px;"
+                            maxlength="255" disabled="disabled"></textarea>
+                    </div>
+                </div>
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">From</label>
+                        <input type="text" class="form-control" data-field="transferFromAndTo" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div>
+                   
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">To</label>
+                        <input type="text" class="form-control" data-field="TransferTo" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div>
+                </div>
+                <div class="row threeCol usiTransferElements" style="padding-top:20px">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Transfer tenure</label>
+                        <input type="text" class="form-control" data-field="TransferTenure" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div>
+                    
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Transfer to portfolio<span
+                                class="required">*</span></label>
+                        <input type="text" class="form-control portfolioText" style="padding-top: 10px;" disabled />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel panel-default width-90percent notUsiTransferElements">
+            <div class="panel-heading panelHeadingStyle">Project Details</div>
+            <div class="panel-body panel-body-padding">
+                <div class="row threeCol padding-bottom-20px">
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Current
+                            Staffing</label>
+                        <input type="text" class="form-control" data-field="CurrentAssignment" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Current
+                            Project Name</label>
+                        <input disabled="disabled" type="text" class="form-control" data-field="currentProjectName"
+                            style="padding-top: 10px;">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px"> Current
+                            Project Leader</label>
+                        <input type="text" class="form-control" data-expand="true" data-field="currentProjectSnrManagerDetailsId"
+                            style="padding-top: 10px;" disabled="disabled">
+                    </div>
+                    
+                   
+                </div>
+                <div class="row threeCol">
+                    
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">New
+                            Assignment</label>
+                        <input type="text" class="form-control" data-field="relocationCatergory" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">New
+                            Project Name</label>
+                        <input disabled="disabled" type="text" class="form-control" data-field="newProjectName" style="padding-top: 10px;">
+                    </div>
+                    
+                   
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">New
+                            Project Leader</label>
+                        <input type="text" class="form-control" data-expand="true" data-field="newProjectSnrMangerDetailsId"
+                            style="padding-top: 10px;" disabled="disabled">
+                    </div>
+                </div>
+                
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Roll-off
+                            Date</label>
+                        <input disabled="disabled" type="text" class="form-control" data-field="currentProjectRollOffDate"
+                            style="padding-top: 10px;">
+                    </div>
+                    
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">On-boarding
+                            Date</label>
+                        <input disabled="disabled" type="text" class="form-control" data-field="newProjectOnBoardingDate"
+                            style="padding-top: 10px;" >
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Transfer
+                            effective as on date</label>
+                        <input disabled="disabled" type="text" class="form-control" data-field="TransferEffectiveAsOnDate"
+                            style="padding-top: 10px;" >
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent usiTransferElements sponsorDiv">
+            <div class="panel-heading panelHeadingStyle">Sponsor Details</div>
+            <div class="panel-body panel-body-padding">
+                <div class="row threeCol padding-bottom-20px">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">US PPMD </label>
+                        <input type="text" class="form-control" data-expand="true" data-field="USPPMDId" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div>
+                    
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">USI PPMD</label>
+                        <input type="text" class="form-control" data-expand="true" data-field="USIPPMDId" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div>
+                   
+                </div>
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Current Project Name<span
+                                class="required">*</span></label>
+                        <input type="text" class="form-control " data-field="currentProjectName" style="padding-top: 10px;">
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Current SM/MD</label>
+                        <input type="text" class="form-control" data-expand="true" data-field="currentProjectSnrManagerDetailsId"
+                            style="padding-top: 10px;" disabled="disabled">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle">Business Approvers</div>
+            <div class="panel-body panel-body-padding">
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Talent
+                            Group Leader</label>
+                        <input disabled="disabled" type="text" class="form-control" data-expand="true" data-field="TalentGroupLeadId"
+                            style="padding-top: 10px;">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Offering
+                            Lead</label>
+                        <input type="text" class="form-control" data-expand="true" data-field="offeringLeadDetailsId"
+                            style="padding-top: 10px;" disabled="disabled">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            Portfolio Lead </label>
+                        <input type="text" class="form-control" data-expand="true" data-field="PortfolioLeadId" style="padding-top: 10px;"
+                            disabled="disabled">
+                    </div>
+                </div>
+                <div class="row threeCol newOfferingFields">
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">New Talent
+                            Group Leader</label>
+                        <input disabled="disabled" type="text" class="form-control" data-expand="true" data-field="New_x0020_Talent_x0020_Group_x00Id"
+                            style="padding-top: 10px;">
+                    </div>
+                    
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">New Offering
+                            Lead</label>
+                        <input type="text" class="form-control" data-expand="true" data-field="New_x0020_Offering_x0020_LeadId"
+                            style="padding-top: 10px;" disabled="disabled">
+                    </div>
+                </div>
+                <div class="row threeCol">
+                                  
+                    <div class="col-sm-3 usiTransferElements">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">Transfer
+                            effective as on date</label>
+                        <input disabled="disabled" maxlength="10" placeholder="mm/dd/yyyy" type="text" class="form-control" data-field="TransferEffectiveAsOnDate"
+                            style="padding-top: 10px;" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent uploadpanel">
+            <div class="panel-heading panelHeadingStyle">Uploaded Approvals</div>
+            <div class="panel-body panel-body-padding">
+                <div class="row">
+                    <div class="col-md-8 attachments" style="padding:10px">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default width-90percent uploadpanel">
+            <div class="panel-heading panelHeadingStyle">Approval/Rejection Comments</div>
+            <div class="panel-body panel-body-padding">
+                <div class="row">
+                    <div class="col-md-10" style="padding:10px">
+                        <textarea disabled="disabled" id="comments" class="form-control" style="width:100%"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default width-90percent" style="border:0px;box-shadow: 0px 0px">
+            <div class="text-right">
+                <button style="float:left" onclick="backToDashboard()" class="btn btn-primary backButton">Back to Dashboard</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- css Loader -->
+    <style>
+        /* Absolute Center Spinner */
+        .loading {
+            position: fixed;
+            z-index: 999;
+            height: 2em;
+            width: 2em;
+            overflow: visible;
+            margin: auto;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+        /* Transparent Overlay */
+        .loading:before {
+            content: '';
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* :not(:required) hides these rules from IE9 and below */
+        .loading:not(:required) {
+            /* hide "loading..." text */
+            font: 0/0 a;
+            color: transparent;
+            text-shadow: none;
+            background-color: transparent;
+            border: 0;
+        }
+
+        .loading:not(:required):after {
+            content: '';
+            display: block;
+            font-size: 10px;
+            width: 1em;
+            height: 1em;
+            margin-top: -0.5em;
+            -webkit-animation: spinner 1500ms infinite linear;
+            -moz-animation: spinner 1500ms infinite linear;
+            -ms-animation: spinner 1500ms infinite linear;
+            -o-animation: spinner 1500ms infinite linear;
+            animation: spinner 1500ms infinite linear;
+            border-radius: 0.5em;
+            -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+            box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+        }
+
+        /* Animation */
+
+        @-webkit-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @-moz-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @-o-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    </style>

@@ -1,0 +1,102 @@
+/* div {
+  max-width: 40em;
+  max-height: 20em;
+  overflow: scroll;
+  position: relative;
+} */
+#tableDiv * {
+  /* font-size: medium; */
+  font-size: small;
+}
+.dash-grid table {
+  /* width: 750px; */
+  border-collapse: collapse;
+  /* margin: 50px auto; */
+  position: relative;
+}
+
+.header th {
+  background: #8bb1cc;
+  color: #000;
+  border: 2px solid #000;
+  position: -webkit-sticky; /*for Safari*/
+  position: sticky;
+  top: 0;
+  text-align: center;
+}
+.headerBody {
+  position: sticky;
+  top: 0;
+}
+.labels th {
+  background: #b1ffd1;
+  color: #000;
+  border: 2px solid #000;
+  position: -webkit-sticky; /*for Safari*/
+  position: sticky;
+  left: 0;
+  text-align: left;
+}
+.subRowHead th {
+  background: #ffdd7e;
+  color: #000;
+  border: 2px solid #000;
+  position: -webkit-sticky; /*for Safari*/
+  position: sticky;
+  left: 0;
+  text-align: left;
+}
+
+.dash-grid th {
+  font-weight: bold;
+  border: 2px solid #000;
+}
+
+.dash-grid td,
+th {
+  padding: 0.25em;
+  text-align: left;
+  font-size: 18px;
+  border: 2px solid #000;
+}
+
+.labels tr td {
+  background: #b1ffd1;
+  font-weight: bold;
+  color: #000;
+  border: 2px solid #000;
+}
+
+.label tr td label {
+  display: block;
+  border: 2px solid #000;
+}
+
+[data-toggle="toggle"] {
+  display: none;
+  /* background: "+"; */
+}
+[data-toggle="toggle"] + label:before {
+  content: "+";
+  letter-spacing: 10px;
+}
+
+[data-toggle="toggle"]:checked + label:before {
+  content: "-";
+  letter-spacing: 10px;
+}
+
+.static {
+  background: #8bb1cc;
+  color: #000;
+  position: -webkit-sticky; /* for Safari */
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.subRowHead {
+  display: none;
+  background-color: bisque !important;
+}

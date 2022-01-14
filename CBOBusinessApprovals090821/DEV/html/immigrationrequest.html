@@ -1,0 +1,801 @@
+<div class="loading">Loading&#8230;</div>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="../SiteAssets/css/custom.css">  -->
+<link rel="stylesheet" href="../SiteAssets/css/customTheme.css">
+<link type="text/css" href="../SiteAssets/css/PageCommon.css" rel="stylesheet" />
+<link rel="stylesheet" href="../SiteAssets/js/libs/jqueryUI/jquery-ui.min.css">
+<script src="../siteassets/js/controllers/common.js?v=0.007"></script>
+<script src="../SiteAssets/js/controllers/immigrationrequest.js?v=0.35"></script>
+<!-- <script>$.getScript("../siteassets/js/controllers/immigrationrequest.js");</script> -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment-with-locales.min.js"></script>
+
+
+<!-- <script src="../_layouts/15/sp.runtime.js"></script>
+<script src="../_layouts/15/sp.js"></script> -->
+<script src="../_layouts/15/1033/strings.js"></script>
+<script src="../_layouts/15/clienttemplates.js"></script>
+<script src="../_layouts/15/clientforms.js"></script>
+<script src="../_layouts/15/clientpeoplepicker.js"></script>
+<script src="../_layouts/15/autofill.js"></script>
+<script src="../_layouts/15/sp.core.js"></script>
+
+<style>
+    .dol-footer{
+        font-size:11px!important;
+    }
+    .dol-footer .container{
+        width:100%!important;
+    }
+    .panel{
+        width: 80% !important;
+    }
+    .threeCol div:nth-child(1),
+    .threeCol div:nth-child(2){
+        padding-right: 7% !important;
+    }
+    .col-form-label {
+        font-weight: 700 !important;
+    }
+    input[type=password][disabled], input[type=text][disabled], input[type=file][disabled], textarea[disabled], select[disabled], .sp-peoplepicker-topLevelDisabled, .ms-inputBoxDisabled {    
+    color: black!important;
+    }
+
+    .error {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  padding:1px 20px 1px 20px;
+  
+}
+
+.bootbox-close-button{
+   min-width: 15px!important;
+}
+[type="file"]{
+height:auto!important;
+}
+.panelHeadingStyle{
+    height:14px!important;
+    padding-top:2px!important;
+}
+
+.container-fluid.dol-footer.s4-notdlg{
+    margin-top:0px!important;
+}
+</style>
+
+
+<input type="hidden" id="TransferType" value="">
+<input type="hidden" id="practitionerDetailsId" value="">
+<input type="hidden" id="offeringLeadDetailsId" value="">
+<input type="hidden" id="resourceManagerDetailsId" value="">
+<!-- <input type="hidden"  id="talentTeamPersonDetailsId" value=""> -->
+<input type="hidden" id="portfolioLeadId" value="">
+
+
+<div class="row">
+    <div class="validationError container" id="validationError" hidden>
+        Please fill all the required fields.
+    </div>
+</div>
+<br>
+<div class="container divTransferTable">
+    <div class="containerAlignWrapper">
+        <div class="panel panel-default width-90percent" style="border:0px;box-shadow: 0px 0px;">
+            <div class="txt-new-Request" style="padding-left:0px">
+                <span id="requestTypeidentifier"></span>
+                <span id="faq" style="float: right;font-size: 15px;text-decoration: underline;"></span>
+            </div>
+        </div>
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle">Practitioner
+                Details</div>
+            <div class="panel-body panel-body-padding">
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Practitioner
+                            Email ID <span class="required">*</span></label>
+                        <input type="text" class="form-control " id="practitionerPersonnelID" style="padding-top: 10px;"
+                            disabled>
+                    </div>
+                    <!-- <div class="col-sm-1"></div> -->
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Practitioner
+                            Name <span class="required">*</span></label>
+                        <input type="text" class="form-control " id="practitionerNameTransfer" style="padding-top: 10px;"
+                            disabled>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Practitioner Level <span class="required">*</span></label>
+                        <input type="text" class="form-control " id="practitionerLevelTransfer" style="padding-top: 10px;"
+                            disabled>
+                    </div>
+                </div>
+
+                <div class="row threeCol">
+                    <!-- <div class="col-sm-1"></div> -->
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px"> USI
+                            Base Location <span class="required">*</span></label>
+                        <select class="form-control dropdownHight disableElement" id="USIBaseLocation" disabled>
+                            <option value="0">Select an option</option>
+                            <option value="Hyderabad">Hyderabad</option>
+                            <option value="Bengaluru">Bengaluru</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Gurgaon">Gurgaon</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Portfolio <span class="required">*</span></label>
+                        <input type="text" class="form-control portfolioText" id="portfolio" style="padding-top: 10px;"
+                            disabled>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Offering <span class="required">*</span></label>
+                        <input type="text" class="form-control " id="Offering" style="padding-top: 10px;" disabled>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Date of Hire <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="dateOfHire" placeholder="mm/dd/yyyy" style="padding-top: 10px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle">Talent and RM</div>
+            <div class="panel-body panel-body-padding">
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Talent
+                            Business Advisor<span class="required">*</span><i data-helpinfo="TBA" data-placement="right"
+                                data-original-title="Talent Business Advisors for your respective Offerings" class="fa fa-question-circle"
+                                aria-hidden="true" style="padding-left: 15px;font-size: 17px;"></i></label>
+                        <select class="form-control dropdownHight height-40px" id="talentLeadList" onchange="">
+                            <option value="0">Select an option</option>
+                        </select>
+                    </div>
+                   <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Resource
+                            Manager<span class="required">*</span><i class="fa fa-question-circle" aria-hidden="true"
+                                style="padding-left: 15px;font-size: 17px;" data-helpinfo="RM" data-placement="right"
+                                data-original-title="Please select your Resource Managers as per your skillset within your Offering/Talent Group"></i></label>
+                        <select class="form-control dropdownHight height-40px" id="resourceManagerList" onchange="">
+                            <option value="0">Select an option</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle">Transfer Request</div>
+            <div class="panel-body panel-body-padding">
+                <input type="hidden" id="hdnPractitionerIdTransfer" />
+                <input type="hidden" id="hdnPractitionerLocationTransfer" />
+                <input type="hidden" id="practitionerBusinessLineTransfer" />
+                <div class="row notUsiTransferElements">
+                    <div class="col-md-6">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Reason
+                            for transfer <span class="required">*</span></label>
+                        <textarea type="text" class="form-control " id="TransferReason" style="padding-top: 10px;"
+                            maxlength="255"></textarea>
+                    </div>
+                </div>
+                <div class="row usiTransferElements">
+                    <div class="col-md-6">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px businesscaselabel">Business
+                            Case<span class="required">*</span><i data-toggle="tooltip" data-placement="right"
+                                data-original-title="Please validate this with your sponsoring US PPMD" class="fa fa-exclamation-circle"
+                                aria-hidden="true" style="padding-left: 15px;font-size: 17px;"></i></label>
+                        <textarea type="text" class="form-control" id="TransferReason" style="padding-top: 10px;"
+                            maxlength="255"></textarea>
+                    </div>
+                </div>
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">From<span class="required">*</span></label>
+                        <select class="form-control dropdownHight disableElement" id="transferFrom" disabled>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">To<span class="required">*</span></label>
+                        <select class="form-control dropdownHight disableElement" id="transferTo">
+                        </select>
+                    </div>
+                </div>
+                <div class="row threeCol usiTransferElements" style="padding-top:20px">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Transfer Tenure<span class="required">*</span></label>
+                        <select class="form-control" id="transferTenure">
+                            <option value="0">Select an option</option>
+                            <option value="1 year temporary">1 year temporary</option>
+                            <option value="Permanent">Permanent</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Transfer To Portfolio<span
+                                class="required">*</span></label>
+                        <input type="text" class="form-control portfolioText" style="padding-top: 10px;" disabled />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel panel-default width-90percent notUsiTransferElements">
+            <div class="panel-heading panelHeadingStyle">Project Details</div>
+            <div class="panel-body panel-body-padding">
+                <div class="row threeCol padding-bottom-20px">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Current
+                            Staffing<span class="required">*</span></label>
+                        <select class="form-control dropdownHight height-40px" id="currentAssignment" onchange="">
+                            <option value="0">Select an option</option>
+                            <option value="Bench">Bench</option>
+                            <option value="Project">Project</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Current
+                            Project Name<span class="required">*</span></label>
+                        <input type="text" class="form-control " id="currentProjectNameTransfer" style="padding-top: 10px;">
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px"> Current
+                            Project Leader<span class="required">*</span><i data-toggle="tooltip" data-placement="right"
+                                data-original-title="If on bench, please select your RM" class="fa fa-exclamation-circle"
+                                aria-hidden="true" style="padding-left: 15px;font-size: 17px;"></i></label>
+                        <div id="peoplepicker" style="width: 200px !important; margin-right: -110px;"></div>
+                    </div>
+                    
+                    
+                </div>
+                <div class="row threeCol padding-bottom-20px">
+                    
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">New
+                            Assignment<span class="required">*</span></label>
+                        <select class="form-control dropdownHight height-40px" id="newAssignment" onchange="">
+                            <option value="0">Select an option</option>
+                            <option value="New Project">New Project</option>
+                            <option value="Same Project">Same Project</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">New
+                            Project Name<span class="required">*</span></label>
+                        <input type="text" class="form-control " id="newProjectNameTransfer" style="padding-top: 10px;">
+                    </div>
+                    
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">New
+                            Project Leader<span class="required">*</span></label>
+                        <div id="peoplepicker1" style="width: 200px !important; margin-right: -110px;"></div>
+                    </div>
+                </div>
+             
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Roll-off
+                            Date<span class="required">*</span></label>
+                        <input type="text" maxlength="10" placeholder="mm/dd/yyyy" class="form-control " id="currentProjectRollOfDateTransfer"
+                            style="padding-top: 10px;">
+                    </div>
+                   
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">On-boarding
+                            Date<span class="required">*</span></label>
+                        <input type="text" maxlength="10" placeholder="mm/dd/yyyy" class="form-control " id="newProjectOnBoardingDateTransfer"
+                            style="padding-top: 10px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent usiTransferElements sponsorDiv">
+            <div class="panel-heading panelHeadingStyle">Sponsor Details</div>
+            <div class="panel-body panel-body-padding">
+                <div class="row threeCol padding-bottom-20px">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">US PPMD <span class="required">*</span></label>
+                        <div id="usPPMD" style="width: 200px !important; margin-right: -110px;"></div>
+                    </div>
+                  
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">USI PPMD<span class="required">*</span></label>
+                        <div id="usiPPMD" style="width: 200px !important; margin-right: -110px;"></div>
+                    </div>
+                    
+                </div>
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Current Project Name<span
+                                class="required">*</span></label>
+                        <input type="text" class="form-control " id="currentProjectNameTransfer" style="padding-top: 10px;">
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Current SM/MD<span class="required">*</span></label>
+                        <div id="peoplepicker" style="width: 200px !important; margin-right: -110px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle">Business Approvers</div>
+            <div class="panel-body panel-body-padding">
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Talent
+                            Group Leader<span class="required">*</span><i data-helpinfo="TGL" data-placement="right"
+                                data-original-title="Talent Group Leaders (TGL) for your respective Offerings" class="fa fa-question-circle"
+                                aria-hidden="true" style="padding-left: 15px;font-size: 17px;"></i></label>
+                        <select class="form-control dropdownHight height-40px" id="talentGroupLeaderList" onchange="">
+                            <option value="0">Select an option</option>
+
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Offering
+                            Lead<span class="required">*</span></label>
+                        <input type="text" class="form-control " id="offeringLead" style="padding-top: 10px;" disabled>
+                        <inut type="hidden" id="offeringLeadId" />
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Portfolio Lead <span class="required">*</span></label>
+                        <input type="text" class="form-control " id="portfolioLead" style="padding-top: 10px;" disabled>
+                    </div>
+                </div>
+                <div class="row threeCol newOfferingFields">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">New Talent
+                            Group Leader<span class="required">*</span><i data-helpinfonew="TGL" data-placement="right"
+                                data-original-title="Talent Group Leaders (TGL) for your respective Offerings" class="fa fa-question-circle"
+                                aria-hidden="true" style="padding-left: 15px;font-size: 17px;"></i></label>
+                        <select class="form-control dropdownHight height-40px" id="newTalentGroupLeaderList" onchange="">
+                            <option value="0">Select an option</option>
+
+                        </select>
+                    </div>
+                    
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">New Offering
+                            Lead<span class="required">*</span></label>
+                        <input type="text" class="form-control " id="newOfferingLead" style="padding-top: 10px;" disabled>
+                        <inut type="hidden" id="newOfferingLeadId" />
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent uploadpanel">
+            <div class="panel-heading panelHeadingStyle">Upload Approvals</div>
+            <div class="panel-body panel-body-padding">
+                <div class="row">
+                    <div class="col-form-label col-sm-8 font-size15px">Please ensure that you upload approvals from Project Leadership</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 attachments" style="padding:10px">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8" style="padding:10px">
+                        <label for="fileIcons" class="font-size15px">Upload Approvals</label><label class="font-size9px"></label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8" style="padding-left:35px">
+                        <input type="file" class="uploadElement" id="uploadapproval1" style="display:inline-block;width:70%" accept="application/pdf" />
+                        <span style="display:none;color: red;vertical-align: middle;" class="glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8" style="padding:5px; padding-left:35px">
+                        <input type="file" class="uploadElement" id="uploadapproval2" style="display:inline-block;width:70%" accept="application/pdf" />
+                        <span style="display:none;color: red;vertical-align: middle;" class="glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8" style="padding:5px; padding-left:35px">
+                        <input type="file" class="uploadElement" id="uploadapproval3" style="display:inline-block;width:70%" accept="application/pdf" />
+                        <span style="display:none;color: red;vertical-align: middle;" class="glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8" style="padding:5px; padding-left:35px">
+                        <input type="file" class="uploadElement" id="uploadapproval4" style="display:inline-block;width:70%" accept="application/pdf" />
+                        <span style="display:none;color: red;vertical-align: middle;" class="glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8" style="padding:5px; padding-left:35px">
+                        <input type="file" class="uploadElement" id="uploadapproval5" style="display:inline-block;width:70%" accept="application/pdf" />
+                        <span style="display:none;color: red;vertical-align: middle;" class="glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                </div>
+                <div class="row" style="padding:10px">
+                    <i style="font-size: 1rem">* Maximum of 5 PDF files can be selected with each file size not more
+                        than 3MB.</i>
+                </div>
+            </div>
+        </div>
+
+        <div class="row width-71percent margin-left-9percent" style="margin-left: 19%">
+            <div class="rightAlign ">
+                <button type="button" class="btn btn-primary float-right btnSubmit height-70px width-30percent btn disableElement margin-left-15px"
+                    id="btnSubmit">Submit</button>
+                <button type="button" class="btn btn-primary float-right buttonsBackgorund width-30percent disableElement btnSaveLater "
+                    id="btnSaveForLater">Save for Later</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade modalcustomPosition" id="interTransfer" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="width:541px">
+            <div class="modal-header">
+                <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                <h4 class="modal-title">Employee to confirm if they meet prerequisites for interoffice transfer:</h4>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li>If you are currently staffed on a project, then current project SM/MD has to approve relocation
+                        to new location while you continue to be staffed on same project.</li>
+                    <li>If you are currently staffed on a project and current project SM/MD has approved roll off from
+                        current project, then you need to have confirmation of staffing on new project in new location
+                        from concerned SM/MD.</li>
+                    <li> If you are currently on bench, then you need to have confirmation of staffing on new project
+                        in new location from concerned SM/MD.</li>
+                    <li> For Gurgaon- a 9 months min staffing needed in new location.</li>
+                </ul>
+            </div>
+            <div class="modal-footer paddingNone">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="enableProjectCategory()">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modalcustomPosition" id="SumbitConfirmation" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="width:541px">
+            <div class="modal-header">
+                <h4 class="modal-title">Submit confirmation</h4>
+            </div>
+            <div class="modal-body">
+                Changes have been submitted successfully
+            </div>
+            <div class="modal-footer paddingNone">
+                <button type="button" class="btn btn-default height-20px width-25percent" data-dismiss="modal" onclick="backNavigate()">Go
+                    to Dashboard</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade modalcustomPosition" id="inProgressRequest" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="width:541px">
+            <div class="modal-header">
+                <h4 class="modal-title">Update</h4>
+            </div>
+            <div class="modal-body">
+                There is already a transfer request in Pending status, request you to review details by accessing
+                Dashboard
+            </div>
+            <div class="modal-footer paddingNone">
+                <button type="button" class="btn btn-default height-20px width-25percent" data-dismiss="modal" onclick="backNavigate()">Go
+                    to Dashboard</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade modalcustomPosition" id="SaveConfirmation" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="width:541px">
+            <div class="modal-header">
+                <h4 class="modal-title">Save Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                Changes have been saved successfully, you can comeback anytime to submit the request.
+            </div>
+            <div class="modal-footer paddingNone">
+                <button type="button" class="btn btn-default height-20px width-25percent" data-dismiss="modal" onclick="backNavigate()">Go
+                    to Dashboard</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade modalcustomPosition" id="inProgressVisaRequest" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="width:541px">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>`
+                <h4 class="modal-title" style="text-align: center;">Alert</h4>
+            </div>
+            <div class="modal-body">
+                There is already a Visa request in Pending status, request you to review existing request by accessing
+                Dashboard
+            </div>
+            <div class="modal-footer paddingNone">
+                <button type="button" class="btn btn-default height-20px width-25percent" data-dismiss="modal" onclick="backNavigate()">Go
+                    to Dashboard</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade modalcustomPosition" id="visaPreRequisite" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="width:541px">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" style="color: red;font-size: x-large;">&times;</button>`
+                <h4 class="modal-title ce" style="text-align: center;font-style: oblique;font-weight: bold;">BEFORE YOU
+                    BEGIN</h4>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li>Please have approvals from Project leadership and US sponsors ready.</li>
+                    <br />
+                    <li>Please have duration and purpose of travel ready.</li>
+                </ul>
+            </div>
+            <div class="modal-footer paddingNone">
+                <button type="button" class="btn btn-default height-20px width-25percent" data-dismiss="modal" onclick="backNavigate()">Go
+                    to Dashboard</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- css Loader -->
+<style>
+
+    .usiTransferElements{
+    display: none;
+}
+
+    .tooltip-inner {
+    max-width: 300%!important;
+    width: 300%;
+}
+
+.businesscaselabel .tooltip-inner {    
+    width: 100%;
+}
+
+    .required{
+        color:red;
+    }
+
+    .disabledfield{
+        background: #eee!important;
+        
+    }
+    .disabledfield .sp-peoplepicker-topLevel{
+        background: #eee!important;
+    }
+    
+
+    .disabledfield .sp-peoplepicker-delImage{
+        display:none;
+    }
+
+    /* .disabledfield .sp-peoplepicker-editorInput{
+        display:none;
+    } */
+
+
+
+    /* Absolute Center Spinner */
+        .loading {
+            position: fixed;
+            z-index: 999;
+            height: 2em;
+            width: 2em;
+            overflow: visible;
+            margin: auto;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+    
+        /* Transparent Overlay */
+        .loading:before {
+            content: '';
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+    
+        /* :not(:required) hides these rules from IE9 and below */
+        .loading:not(:required) {
+            /* hide "loading..." text */
+            font: 0/0 a;
+            color: transparent;
+            text-shadow: none;
+            background-color: transparent;
+            border: 0;
+        }
+    
+        .loading:not(:required):after {
+            content: '';
+            display: block;
+            font-size: 10px;
+            width: 1em;
+            height: 1em;
+            margin-top: -0.5em;
+            -webkit-animation: spinner 1500ms infinite linear;
+            -moz-animation: spinner 1500ms infinite linear;
+            -ms-animation: spinner 1500ms infinite linear;
+            -o-animation: spinner 1500ms infinite linear;
+            animation: spinner 1500ms infinite linear;
+            border-radius: 0.5em;
+            -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+            box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+        }
+    
+        /* Animation */
+    
+        @-webkit-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+    
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    
+        @-moz-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+    
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    
+        @-o-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+    
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    
+        @keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+    
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+<script type="text/javascript">
+
+    var collListItem;
+    var visaCollListItem;
+    var newTransferInitiationItem;
+    var newTransferStatusItem;
+    var existingId;
+    var newRequestItem;
+    var newStatusItem;
+    var siteUrl = _spPageContextInfo.webServerRelativeUrl;
+    var fileName = "";
+    var fullDate = new Date();
+    var twoDigitDate = ((fullDate.getDate().length + 1) === 2) ? '0' + (fullDate.getDate()) : (fullDate.getDate());
+    var twoDigitMonth = ((fullDate.getMonth().length + 1) === 1) ? (fullDate.getMonth() + 1) : '0' + (fullDate.getMonth() + 1);
+    var currentDate = twoDigitMonth + "/" + twoDigitDate + "/" + fullDate.getFullYear();
+
+    $(document).ready(function () {
+        debugger;
+        JSRequest.EnsureSetup();
+        $("#btnTransfer").click();
+        $("#btnTransfer").on("click", function () {
+            var currentLoggedInUser = [];
+            loadLoggedInUserDetailsForTransfer(currentLoggedInUser);
+            toggleTopButtons($(this));
+            $('.divTransferTable').show();
+            $('.divVisaTable').hide();
+        });
+        var Id = JSRequest.QueryString["itemId"];
+        if (Id !== undefined && Id !== null) {
+            //update request in edit
+            mapExistingDataToForm(Id);
+        }
+        if (!window.FileReader) {
+            alert('This browser does not support the FileReader API.');
+        }
+        $('.btnTransferType').click(function () {
+            $('.btnTransferType').removeClass('selected-button');
+            $(this).addClass('selected-button');
+            var transferType = $(this).attr('data-value');
+            $('#hdnTransferType').val(transferType);
+            console.log(transferType);
+            if (transferType === "INTER_OFFICE_TRANSFER") {
+                console.log("Launching the modal");
+                $('#interTransfer').modal('show');
+            }
+        });
+
+        $('.btnRelocationCategory').click(function () {
+            $('.btnRelocationCategory').removeClass('selected-button');
+            $(this).addClass('selected-button');
+            $('#hdnRelocationCategory').val($(this).attr('data-value'));
+        });
+        $('.btnVisaType').click(function () {
+            $('.btnVisaType').removeClass('btn-success');
+            var dataId = $(this).attr("data-visa-type");
+            $(this).addClass('btn-success');
+            var buttonId = this.id;
+            $('#hdnVisaType').val(dataId);
+            $('.btnVisaType').removeClass('error-outline');
+            $('#visaTypeError').text("").show();
+            //$('#H1Notice').modal('show');
+        });
+        $('.btnVisaProcedure').click(function () {
+            $('.btnVisaProcedure').removeClass('btn-success');
+            $(this).addClass('btn-success');
+            var buttonId = this.id;
+            $('#hdnProcedure').val(buttonId);
+            $('.btnVisaProcedure').removeClass('error-outline');
+            $('#procedureError').text("").show();
+        });
+    });
+</script>
+
+
+

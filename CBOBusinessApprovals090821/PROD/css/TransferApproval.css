@@ -1,0 +1,24 @@
+
+            .boldText {
+                font-weight: bold;
+            }
+
+            .roundedRectangleBg {
+                border-radius: 25px;
+                background: rgb(100, 100, 100);
+                color: white;
+            }
+			
+            .greenBgWhiteTextButton {
+                background-color: #86bc25;
+                color: white;
+                margin-left: 2%;
+                margin-right: 1%;
+            }			
+
+            .blackBgWhiteTextButton {
+                background-color: black;
+                color: white;
+            }
+
+       

@@ -1,0 +1,692 @@
+<div class="loading" style="display:none">Loading&#8230;</div>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="../SiteAssets/css/customTheme.css">
+<link rel="stylesheet" href="../SiteAssets/js/libs/jqueryUI/jquery-ui.min.css">
+<script src="../siteassets/js/controllers/common.js?v=0.008"></script>
+<script src="../siteassets/js/controllers/ExpenseApprovalPage.js?v=0.44"></script>
+<link type="text/css" href="../SiteAssets/css/PageCommon.css" rel="stylesheet" />
+
+<script src="../_layouts/15/1033/strings.js"></script>
+<script src="../_layouts/15/clienttemplates.js"></script>
+<script src="../_layouts/15/clientforms.js"></script>
+<script src="../_layouts/15/clientpeoplepicker.js"></script>
+<script src="../_layouts/15/autofill.js"></script>
+<script src="../_layouts/15/sp.core.js"></script>
+
+<style>
+         /* for desktop */
+         @media only screen and (min-width: 820px) {
+        .small-devices {display: none;}
+        .short-text { display: none; }
+        .button-approve{margin-left:5%}
+        .button-reject{margin-left:5%}
+        .button-bk-dashboard{float:left}
+        .button-more-info{margin-left:5%;float:left}
+
+        .button-top-approve{margin-left:40px}
+        .button-top-reject{margin-left:40px}
+        .button-top-bk-dashboard{float:left}
+
+        .small-devices-a {display: none;}
+        /* .large-devices-a { display: inline; }    */
+
+        .threeCol div:nth-of-type(2),
+        .threeCol div:nth-of-type(3) {
+            padding-left: 7% !important;
+        }
+
+        /*people picker stype only for desktop*/
+        /* .peoplepicker-style{width: 200px !important; margin-right: -110px;} */
+        
+    }
+
+    /* for mobile devices */
+    @media only screen and (max-width: 820px) {
+        
+        .small-device-panel{
+        display:none;
+        }
+
+        /* .short-text { display: inline-block; } */
+        .full-text { display: none; }
+        .button-approve{float:right; margin-top: 2%;}
+        .button-reject{float:left; margin-top: 2%;}
+        .button-bk-dashboard{float:left; margin-top: 2%;}
+        .button-more-info{float:right; margin-top: 2%;}
+
+        .button-top-approve{margin-top: 2%}
+        .button-top-reject{margin-left: 2%;margin-top: 2%}
+        .button-top-bk-dashboard{float:left;margin-right:2%;margin-top: 2%}
+
+        /* .small-devices-a {display: inline;} */
+        .large-devices-a { display: none; }
+
+        .small-devices-fields {width: 90% !important;}
+
+        /*for mobile of peoplepicker*/
+        /* .sp-peoplepicker-topLevel{width: 100% !important;} */
+        
+    }
+
+
+    .dol-footer {
+        font-size: 11px !important;
+    }
+
+    .dol-footer .container {
+        width: 100% !important;
+    }
+
+    input[type=password][disabled],
+    input[type=text][disabled],
+    input[type=file][disabled],
+    textarea[disabled],
+    select[disabled],
+    .sp-peoplepicker-topLevelDisabled,
+    .ms-inputBoxDisabled {
+        color: black !important;
+    }
+
+    .error {
+        color: #a94442;
+        background-color: #f2dede;
+        border-color: #ebccd1;
+        padding: 1px 20px 1px 20px;
+    }
+
+    .bootbox-close-button {
+        min-width: 15px !important;
+    }
+
+    [type="file"] {
+        height: auto !important;
+    }
+
+    .panelHeadingStyle {
+        height: 14px !important;
+        padding-top: 2px !important;
+    }
+
+    .panel-body {
+        padding-bottom: 12px !important;
+    }
+
+    .container-fluid.dol-footer.s4-notdlg {
+        margin-top: 0px !important;
+    }
+
+    label {
+        font-weight: bold !important;
+    }
+
+    .has-error {
+        border: 1px solid red !important;
+    }
+
+    input[type="text"][disabled] {
+        color: black !important;
+    }
+
+    .paddingTop {
+        padding-top: 10px;
+    }
+
+    .checklistItemsDiv label {
+        font-weight: normal !important;
+    }
+
+    .panel {
+        width: 80% !important;
+    }
+
+    /* .threeCol div:nth-of-type(2),
+    .threeCol div:nth-of-type(3) {
+        padding-left: 7% !important;
+    } */
+    .required {
+        color: red;
+    }
+	.disabledfield {
+        background: #eee !important;
+    }
+
+    .disabledfield .sp-peoplepicker-topLevel {
+        background: #eee !important;
+    }
+
+
+    .disabledfield .sp-peoplepicker-delImage {
+        display: none;
+    }
+
+    button{
+        outline: none !important;
+    }
+</style>
+
+
+<input type="hidden" id="TransferType" value="">
+<!-- <input type="hidden" id="practitionerDetailsId" value=""> -->
+<input type="hidden" id="offeringLeadDetailsId" value="">
+<input type="hidden" id="resourceManagerDetailsId" value="">
+<input type="hidden" id="portfolioLeadId" value="">
+
+<br>
+<div class="container divTransferTable" style="display:none">
+<!--<div class="container divTransferTable" >-->
+    <div class="containerAlignWrapper">
+        <div class="panel panel-default width-90percent" style="border:0px;box-shadow: 0px 0px">
+            <div class="txt-new-Request" style="padding-left:0px">
+                <span id="requestTypeidentifier"></span>
+            </div>
+        </div>
+        <!-- <div class="panel panel-default width-90percent" style="border:0px;box-shadow: 0px 0px">
+            <div class="text-right">
+                <button style="float:left" onclick="backToDashboard()" class="btn btn-primary">
+                    Back to
+                    Dashboard
+                </button>
+                <button style="margin-left:40px" onclick="takeAction()"
+                        class="btn btn-primary actionButtons">
+                    Reject
+                </button>
+                <button style="margin-left:40px" onclick="takeAction(true)"
+                        class="btn btn-primary actionButtons">
+                    Approve
+                </button>
+            </div>
+
+        </div> -->
+        <div class="panel panel-default width-90percent" style="border:0px;box-shadow: 0px 0px">
+            <div class="text-right">
+                <button onclick="backToDashboard()" class="btn btn-primary button-top-bk-dashboard">Back to Dashboard</button>
+                <button onclick="takeAction()" class="btn btn-primary actionButtons button-top-reject">Reject</button>
+                <a id="approvalHistoryMobile" class="small-devices-a" style="float:left; margin-top:20px" href="#"><b><u>Approval History</u></b></a>
+                <button onclick="takeAction(true)" class="btn btn-primary actionButtons button-top-approve">Approve</button>
+            </div>
+            <a id="approvalHistory" class="large-devices-a" style="float:right;margin-left:40px; margin-top:15px" href="#"><b><u>Approval History</u></b></a>
+        </div>
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle"><i class="glyphicon glyphicon-minus expander small-devices" onclick="togglePanel(this)"></i>&nbsp;Practitioner Details</div>
+            <div class="panel-body panel-body-padding">
+                <div class="row threeCol">
+
+                    <div class="col-sm-3 PersonalID">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            Personal ID <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control " id="practitionerDetailsId" data-field="PID" style="padding-top: 10px;" onkeypress="return isNumberKey(event)" disabled="disabled">
+                    </div>
+                    <div class="col-sm-3">
+                       <!-- <span data-field="practitionerDetails0Id" data-expand="true"></span>-->
+                        <label for="staticEmail"
+                               class="col-form-label paddingTop paddingBottom font-size15px">
+                            Practitioner
+                            Email ID <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control" id="practitionerPersonnelID"
+                               data-field="PractitionerEmail"
+                               style="padding-top: 10px;" disabled="disabled">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail"
+                               class="col-form-label paddingTop paddingBottom font-size15px">
+                            Practitioner
+                            Name <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control" data-field="PractitionerName" style="padding-top: 10px;"
+                               disabled="disabled">
+                    </div>
+                </div>
+
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            Practitioner Level <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control" data-field="PractitionerLevel"
+                               style="padding-top: 10px;" disabled="disabled">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            USI
+                            Base Location <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control" data-field="USIBaseLocation" style="padding-top: 10px;"
+                               disabled="disabled">
+                    </div>
+                  
+                </div>
+
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            Portfolio<span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control" data-field="Portfolio" style="padding-top: 10px;"
+                               disabled="disabled">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            Offering<span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control" id="Offering" data-field="Offering" style="padding-top: 10px;"
+                               disabled="disabled">
+                    </div>
+
+                </div>
+
+              
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle"><i class="glyphicon glyphicon-plus expander small-devices" onclick="togglePanel(this)"></i>&nbsp;Expense Details</div>
+            <div class="panel-body panel-body-padding small-device-panel">
+                <div class="row">
+                    <div class="col-md-10" style="padding-top:20px">
+                        <label>
+                            Is the request raised through Ariba?
+                            <span class="required">*</span>
+                        </label>
+                    </div>                 
+
+                    <div class="col-md-5">
+                        <label>
+                            <input type="radio" class="form-control" id="RaisedThroughAribaYes" value="Yes" name="RaisedThroughAriba" data-field="IsAribaRequest" style="padding-top: 10px;display: inline-block" disabled="disabled">
+                            <label class="col-form-label">Yes</label>
+                        </label>
+                        <label>
+                            <input type="radio" class="form-control" id="RaisedThroughAribaNo" value="No" name="RaisedThroughAriba" data-field="IsAribaRequest" style="padding-top: 10px;display: inline-block" disabled="disabled">
+                            <label class="col-form-label">No</label>
+                        </label>
+                    </div>
+                </div>
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            WBS Code <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control" data-field="WBSCode"
+                               style="padding-top: 10px;" disabled="disabled">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            Expense Type<span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control" data-field="ExpenseType"
+                               style="padding-top: 10px;" disabled="disabled">
+                    </div>
+
+                    <!--<div class="col-sm-3 expenseType">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            Expense Type<span class="required">*</span>
+                        </label>
+
+                        <select class="form-control dropdownHight height-40px" id="prmProcess" onchange="">
+                            <option value="0">Select an option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>-->
+
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            Expense Date<span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control" id="expenseDate" data-field="ExpenseDate" placeholder="mm/dd/yyyy"
+                               style="padding-top: 10px;" disabled="disabled">
+                    </div>
+                </div>
+
+
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            Expense Amount(INR) <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control" data-field="EstimatedExpenseAmount"
+                               style="padding-top: 10px;" disabled="disabled">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            Expense Reason<span class="required">*</span>
+                        </label>
+                        <textarea type="text" class="form-control" data-field="ExpenseReason"
+                                  style="padding-top: 10px;" disabled="disabled"></textarea>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            Thread/Initiative Lead<span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control" data-expand="true" data-field="ThreadorInitiativeLeadId" id="currClientName" style="padding-top: 10px;" disabled="disabled">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel panel-default width-90percent ">
+            <div class="panel-heading panelHeadingStyle"><i class="glyphicon glyphicon-plus expander small-devices" onclick="togglePanel(this)"></i>&nbsp;Approvers Details</div>
+            <div class="panel-body panel-body-padding small-device-panel">
+                <div class="row threeCol">
+                    <div class="col-sm-3 ">
+                        <!--<label class="col-form-label paddingTop paddingBottom font-size15px">
+        Talent
+        Group Leader<span class="required">*</span><i data-helpinfo="TGL" data-placement="right"
+                                                      data-original-title="Talent Group Leaders (TGL) for your respective Offerings"
+                                                      class="fa fa-question-circle" aria-hidden="true"
+                                                      style="padding-left: 15px;font-size: 17px;"></i>
+    </label>
+    <select class="form-control dropdownHight height-40px" id="talentGroupLeaderList" onchange="">
+        <option value="0">Select an option</option>
+    </select>-->
+    <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+        Talent
+        Group Leader <span class="required" disabled="disabled">*</span>
+    </label>
+    <input disabled="disabled" type="text" class="form-control" data-expand="true" data-field="TalentGroupLeadId"
+            style="padding-top: 10px;">
+     </div>
+
+                    <div class="col-sm-3">
+                        <!--<label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+        Offering Lead <span class="required">*</span>
+    </label>
+    <input disabled="disabled" type="text" class="form-control" data-field="OfferingLead"
+           style="padding-top: 10px;">-->
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            Offering
+                            Lead <span class="required" disabled="disabled">*</span>
+                        </label>
+                        <input type="text" class="form-control" data-expand="true" id="offeringLeadId" data-field="OfferingLeadId"
+                               style="padding-top: 10px;" disabled="disabled">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <label for="staticEmail" class="col-form-label paddingTop paddingBottom font-size15px">
+                            Portfolio Lead <span class="required" disabled="disabled">*</span>
+                        </label>
+                        <input disabled="disabled" type="text" class="form-control" data-expand="true" data-field="PortfolioLeadId"
+                               style="padding-top: 10px;">
+                    </div>
+                </div>
+             
+            </div>
+        </div>
+        <!--Upload File control -->
+        <div class="panel panel-default width-90percent uploadpanel">
+            <div class="panel-heading panelHeadingStyle"><i class="glyphicon glyphicon-plus expander small-devices" onclick="togglePanel(this)"></i>&nbsp;Upload Documents</div>
+            <div class="panel-body panel-body-padding small-device-panel">
+                <!--<div class="row">
+        <div class="col-form-label col-sm-8 font-size15px">
+            Please ensure that you upload approvals from Project Leadership
+        </div>
+    </div>-->
+                <!--<div class="row">
+        <div class="col-md-11" style="padding-left:30px">
+            <div>
+                <label>
+                    <input data-field="ChecklistItems" type="checkbox"
+                           value="chk1" />  USI MD & US PPD approval confirming the project duration( 6 months for resources currently at Onsite & 9 months for resources at offshore)
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input data-field="ChecklistItems" type="checkbox"
+                           value="chk2" />  Exception approval from Offering Lead on the Tenure( less than 2 years with the Firm)
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input data-field="ChecklistItems" type="checkbox"
+                           value="chk3" />  Exception approval from Offering Lead on the duration of the project( 6 months for resources currently at Onsite & 9 months for resources at offshore)
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input data-field="ChecklistItems" type="checkbox"
+                           value="chk4" />  Exception approval from Offering Lead on the level (Less than Career level 3- Consultant)
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input data-field="ChecklistItems" type="checkbox"
+                           value="chk5" />  Exception approval from Offering Lead on Premium Processing
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8" style="padding:10px 10px 3px 10px;">
+            <label for="fileIcons" class="col-form-label font-size15px">Upload Approvals</label><label class="font-size9px"></label>
+        </div>
+    </div>-->
+                <!--  <div class="row">
+    <div class="col-md-3" style="padding-top:10px">
+        <input name="Checklist1" type="checkbox" id="uploadapprovalcb1" data-cbcode="chk1" />
+        <label for="uploadapprovalcb1">Check list1 </label>
+    </div>
+           <div class="col-md-8" style="padding-left:35px">
+               <input type="file" class="uploadElement" id="uploadapproval1" style="display:inline-block;width:70%"
+                      accept="application/pdf" />
+               <span style="display:none;color: red;vertical-align: middle;"
+                     class="glyphicon glyphicon-remove-circle"></span>
+           </div>
+       </div>-->
+                <!--<div class="row">
+                 
+                    <div class="col-md-8" style="padding:5px;padding-left:35px">
+                        <input type="file" class="uploadElement" id="uploadapproval2" style="display:inline-block;width:70%"
+                               accept="application/pdf" />
+                        <span style="display:none;color: red;vertical-align: middle;"
+                              class="glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                </div>
+                <div class="row">
+                  
+                    <div class="col-md-8" style="padding:5px;padding-left:35px">
+                        <input type="file" class="uploadElement" id="uploadapproval3" style="display:inline-block;width:70%"
+                               accept="application/pdf" />
+                        <span style="display:none;color: red;vertical-align: middle;"
+                              class="glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                </div>-->
+                <!--<div class="row">
+                  
+                    <div class="col-md-8" style="padding:5px;padding-left:35px">
+                        <input type="file" class="uploadElement" id="uploadapproval4" style="display:inline-block;width:70%"
+                               accept="application/pdf" />
+                        <span style="display:none;color: red;vertical-align: middle;"
+                              class="glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                </div>
+                <div class="row">
+                  
+                    <div class="col-md-8" style="padding:5px;padding-left:35px">
+                        <input type="file" class="uploadElement" id="uploadapproval5" style="display:inline-block;width:70%"
+                               accept="application/pdf" />
+                        <span style="display:none;color: red;vertical-align: middle;"
+                              class="glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                </div>-->
+               
+                <div class="row">
+                    <div class="col-md-8 attachments" style="padding:10px">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent uploadpanel">
+            <div class="panel-heading panelHeadingStyle"><i class="glyphicon glyphicon-plus expander small-devices" onclick="togglePanel(this)"></i>&nbsp;Approval/Rejection Reason</div>
+            <div class="panel-body panel-body-padding small-device-panel">
+                <div class="row" id="previousComments">
+                </div>
+                <div class="row">
+                    <div class="col-md-10" style="padding:10px">
+                        <textarea id="comments" class="form-control" style="width:100%"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="panel panel-default width-90percent" style="border:0px;box-shadow: 0px 0px">
+            <div class="text-right">
+                <button style="float:left" onclick="backToDashboard()" class="btn btn-primary">
+                    Back to
+                    Dashboard
+                </button>
+                <!-- <button style="margin-left:40px;float:left" onclick="requestMoreInfo()"
+                        class="moreinfo btn btn-primary actionButtons">
+                    <span class="glyphicon glyphicon-share-alt"></span><span>Request More Information</span>
+                </button> -->
+                <button style="margin-left:40px" onclick="takeAction()"
+                        class="btn btn-primary actionButtons">
+                    Reject
+                </button>
+                <button style="margin-left:40px" onclick="takeAction(true)"
+                        class="btn btn-primary actionButtons">
+                    Approve
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- css Loader -->
+    <style>
+        /* Absolute Center Spinner */
+        .loading {
+            position: fixed;
+            z-index: 999;
+            height: 2em;
+            width: 2em;
+            overflow: visible;
+            margin: auto;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+            /* Transparent Overlay */
+            .loading:before {
+                content: '';
+                display: block;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.3);
+            }
+
+            /* :not(:required) hides these rules from IE9 and below */
+            .loading:not(:required) {
+                /* hide "loading..." text */
+                font: 0/0 a;
+                color: transparent;
+                text-shadow: none;
+                background-color: transparent;
+                border: 0;
+            }
+
+                .loading:not(:required):after {
+                    content: '';
+                    display: block;
+                    font-size: 10px;
+                    width: 1em;
+                    height: 1em;
+                    margin-top: -0.5em;
+                    -webkit-animation: spinner 1500ms infinite linear;
+                    -moz-animation: spinner 1500ms infinite linear;
+                    -ms-animation: spinner 1500ms infinite linear;
+                    -o-animation: spinner 1500ms infinite linear;
+                    animation: spinner 1500ms infinite linear;
+                    border-radius: 0.5em;
+                    -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+                    box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+                }
+
+        /* Animation */
+
+        @-webkit-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @-moz-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @-o-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+

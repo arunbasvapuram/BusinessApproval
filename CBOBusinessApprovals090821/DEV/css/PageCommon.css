@@ -1,0 +1,27 @@
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus{
+    background-color: #86BC25!important;
+    color:white!important;
+}
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover{
+    background:#86BC25!important;
+    color:white!important;
+}
+.navbar-nav > li > a {
+    padding-top:8px!important;
+    padding-bottom:5px!important;
+    font-weight:bold!important;   
+    font-size:11px!important; 
+}
+
+.navbar-default .navbar-nav > .open > a{
+    background:#86BC25!important;
+    color:white!important;
+}
+.navbar-nav .dropdown-menu li a:hover{
+background-color:#86BC25!important;
+color:white!important;
+}
+
+.navbar,navbar-default{
+    min-height:auto !important;
+}

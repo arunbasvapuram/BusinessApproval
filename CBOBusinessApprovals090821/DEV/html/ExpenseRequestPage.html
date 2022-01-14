@@ -1,0 +1,621 @@
+<div class="loading" style="display:none">Loading&#8230;</div>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="../SiteAssets/css/custom.css">  -->
+<link rel="stylesheet" href="../SiteAssets/css/customTheme.css">
+<link rel="stylesheet" href="../SiteAssets/js/libs/jqueryUI/jquery-ui.min.css">
+<script src="../siteassets/js/controllers/common.js?v=0.001"></script>
+<script src="../SiteAssets/js/controllers/ExpenseRequestPage.js?v=0.083"></script>
+<script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment-with-locales.min.js"></script>
+
+
+<!-- <script src="../_layouts/15/sp.runtime.js"></script>
+<script src="../_layouts/15/sp.js"></script> -->
+<script src="../_layouts/15/1033/strings.js"></script>
+<script src="../_layouts/15/clienttemplates.js"></script>
+<script src="../_layouts/15/clientforms.js"></script>
+<script src="../_layouts/15/clientpeoplepicker.js"></script>
+<script src="../_layouts/15/autofill.js"></script>
+<script src="../_layouts/15/sp.core.js"></script>
+
+<style>
+    .dol-footer {
+        font-size: 11px !important;
+    }
+
+    .dol-footer .container {
+        width: 100% !important;
+    }
+
+    .error {
+        color: #a94442;
+        background-color: #f2dede;
+        border-color: #ebccd1;
+        padding: 1px 20px 1px 20px;
+    }
+
+    .bootbox-close-button {
+        min-width: 15px !important;
+    }
+
+    [type="file"] {
+        height: auto !important;
+    }
+
+    .panelHeadingStyle {
+        height: 14px !important;
+        padding-top: 2px !important;
+    }
+
+    .container-fluid.dol-footer.s4-notdlg {
+        margin-top: 0px !important;
+    }
+
+    .col-form-label {
+        font-weight: 700 !important;
+    }
+    .panel{
+        width: 80% !important;
+    }
+
+    .threeCol div:nth-child(1),
+    .threeCol div:nth-child(2){
+        padding-right: 7% !important;
+    }
+
+    .paddingBottom5px{
+        padding-bottom: 5px;
+    }
+
+    input[type=password][disabled], input[type=text][disabled], input[type=file][disabled], textarea[disabled], select[disabled], .sp-peoplepicker-topLevelDisabled, .ms-inputBoxDisabled {    
+        color: black!important;
+    }
+
+    button{
+        outline: none !important;
+    }
+
+</style>
+
+
+<input type="hidden" id="TransferType" value="">
+<input type="hidden" id="practitionerDetailsId" value="">
+<input type="hidden" id="offeringLeadDetailsId" value="">
+<input type="hidden" id="resourceManagerDetailsId" value="">
+<input type="hidden" id="talentEsDetailsId" value="">
+<!-- <input type="hidden"  id="talentTeamPersonDetailsId" value=""> -->
+
+
+<div class="row">
+    <div class="validationError container" id="validationError" hidden>
+        Please fill all the required fields.
+    </div>
+</div>
+<br>
+<div class="container divTransferTable">
+    <div class="containerAlignWrapper">
+        <div class="panel panel-default width-90percent" style="border:0px;box-shadow: 0px 0px;">
+            <div class="txt-new-Request" style="padding-left:0px">
+                <span id="requestTypeidentifier"></span>
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle">Requestor
+                Details
+            </div>
+            <div class="panel-body panel-body-padding">
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Personal ID <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control " id="practitionerPID" style="padding-top: 10px;" onkeypress="return isNumberKey(event)">
+                    </div>
+                     
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Requestor
+                            Email ID <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control " id="practitionerPersonnelID" style="padding-top: 10px;" disabled>
+                    </div>
+                     
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Requestor
+                            Name <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control " id="practitionerNameTransfer" style="padding-top: 10px;" disabled>
+                    </div>
+                </div>
+
+                <div class="row threeCol">
+                    <div class="col-sm-3 ">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Requestor Level <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control " id="practitionerLevelTransfer"
+                            style="padding-top: 10px;" disabled>
+                    </div>
+                     
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            USI
+                            Base Location <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control " id="USIBaseLocation"
+                            style="padding-top: 10px;" disabled>
+                        <!-- <select class="form-control dropdownHight disableElement" id="USIBaseLocation" disabled>
+                            <option value="0">Select an option</option>
+                            <option value="Hyderabad">Hyderabad</option>
+                            <option value="Bengaluru">Bengaluru</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Gurgaon">Gurgaon</option>
+                        </select> -->
+                    </div>
+                </div>
+
+                <div class="row threeCol">
+                    <div class="col-sm-3 ">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Portfolio <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control portfolioText" id="portfolio" style="padding-top: 10px;"
+                            disabled>
+                    </div>
+                     
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Offering <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control " id="Offering" style="padding-top: 10px;" disabled>
+                    </div>
+                     
+                    <!-- <div class="col-sm-3 marketOffering" style="display:none">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                                Market Offering
+                                <span class="required">*</span>
+                            </label>
+                            <select class="form-control dropdownHight height-40px" id="marketOfferingList" onchange="">
+                                <option value="0">Select an option</option>
+                                <option value="SDE">Systems Design & Engineering</option>
+                                <option value="SDO">Service Delivery Optimization</option>
+                                <option value="AMA">App Modernization and App Architecture</option>
+                                <option value="IS">Integration Services</option>
+                            </select>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle">Expense Details</div>
+            <div class="panel-body panel-body-padding">
+               <!-- <div class="row padding-bottom-20px threeCol radiogroup">
+                    <div class="col-sm-3 lonetype" style="">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px" style="width:240px !important;">
+                            Is the request raised through Ariba? <span class="required">*</span>
+                        </label>
+                        <div>
+                            <label>
+                                <input type="radio" class="form-control" id="AribaRequestY" value="Yes" name="AribaRequest" style="padding-top: 10px;display: inline-block"><label class="col-form-label">Yes</label>
+                            </label>
+                            <label>
+                                <input type="radio" class="form-control" id="AribaRequestN" value="No" name="AribaRequest" style="padding-top: 10px;display: inline-block"><label class="col-form-label">No</label>
+                            </label>  
+                        </div>   
+                    </div>
+                </div> -->
+
+                <div class="row padding-bottom-20px threeCol">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            WBS Code <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control" id="WBSCodeId" maxlength="22" style="padding-top: 10px;">
+                    </div>      
+                    <div class="col-sm-3 lonetype" style="">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Expense Type
+                            <span class="required">*</span>
+                        </label>
+                        <select class="form-control dropdownHight height-40px" id="ExpenseTypeDropDown" onchange="">
+                            <option value="0">Select an option</option>
+                            <!-- <option value="LDTE">Travel Expenses for training</option>
+                            <option value="LDAC">Approval for certifications</option>
+                            <option value="BKPC">Books & Publications</option> -->                                                        
+                            <!-- <option value="BUSE">Bus Entertainment</option> -->                                                                                                                
+                            <!-- <option value="GFNE">Gifts Non-employee</option> -->                            
+                            <!-- <option value="CFCT">Cafeteria Costs</option> -->                                                        
+                            <!-- <option value="FPML">Firm Provided Meals</option>
+                            <option value="MLOT">Meals-Overtime</option>
+                            <option value="PKAW">Parking-Auto Weekend</option>
+                            <option value="PRKL">Parking-Local</option> -->                            
+                            <!-- <option value="REML">Recr Exp - Meals</option>
+                            <option value="TRPN">Trans-Personne</option> -->                            
+                            <!-- <option value="PRCP">Printing & Copying</option> -->                            
+                            <option value="TREA">Travel Exp-Airline</option>
+                            <option value="MCPN">Moving Cost-Persnl</option>
+                            <option value="TRHL">Traveling Exp-Hotel</option>
+                            <option value="IMGF">Intl Immigration Fee</option>
+                            <option value="TRSD">Trvl Exp-Sp & Dep</option>
+                            <option value="MVTE">Moving-Trv Exp</option>
+                            <option value="TRET">Travel Expenses-Taxi</option>
+                            <option value="STWF">Staff Welfare USI</option>
+                            <option value="BUML">Business Meals</option>
+                            <option value="TRPD">Trvl Exp-Per Diem</option>
+                            <option value="TRRC">Travel Exp-Rental Ca</option>  
+                            <option value="OFSL">Office Supplies</option>      
+                            <option value="PHEX">Physical Exams</option>     
+                            <option value="TRHT">Trvl Exp-HotelTax</option>      
+                            <option value="FPRE">Firm Provi Rec Ent</option>     
+                            <option value="CMCO">Computer Costs-Other</option>   
+                            <option value="TRME">Trvl Exp-Meal Exp</option> 
+                            <option value="FPMO">Firm Prov Mls In Off</option>
+                            <option value="TRCS">Trvl Exp-Car Svc/Lmo</option>
+                            <option value="SMRG">Seminar Registration</option>
+                            <option value="TRIT">Trvl Exp-InbIntl Tem</option>
+                            <option value="CPUC">CPU Costs HostingSvs</option>
+                            <option value="TRTL">Trvl Exp-Temp Living</option>
+                            <option value="TRAA">Trvl Exp- Air Alt</option>
+                            <option value="TRMC">Traveling Exp-Misc</option>                                                                                    
+                            <!-- <option value="TRAF">Trvl Exp-Agency Fee</option>
+                            <option value="TRBF">Trvl Exp-Air Bag Fee</option>
+                            <option value="TRAH">Trvl Exp-Air/Htl Cl</option>
+                            <option value="TRAC">Trvl Exp-Alcohol Fed</option> -->                            
+                            <!-- <option value="TRCG">Trvl Exp-CarRent Gas</option>
+                            <option value="TRFP">Trvl Exp-Fed PerDiem</option>
+                            <option value="TRHC">Trvl Exp-Health Club</option>
+                            <option value="TRHI">Trvl Exp-Hot Int A</option> -->                                                                                                                
+                            <!-- <option value="TRPH">Trvl Exp-Phone</option>
+                            <option value="TRPK">Trvl Exp-Pking</option>
+                            <option value="TRCA">Trvl Exps-Corp Apt</option>                             -->                                                        
+                            <!-- <option value="TRTP">Trvl Exp-Tips</option>
+                            <option value="TRTO">Trvl Exp-Tolls</option>
+                            <option value="TROG">TrvlExp-Oth Grnd Trn</option> -->                            
+                        </select>
+                    </div>                
+                   
+                    <div class="col-sm-3 ">
+    					<label class="col-form-label paddingTop paddingBottom font-size15px">
+	    					Expense Date
+		    				<span class="required">*</span>
+			    		</label>
+				    	<input type="text" maxlength="10" placeholder="mm/dd/yyyy" class="form-control " id="ExpenseDate"
+					    	style="padding-top: 10px;">
+				    </div>
+                </div>
+
+                <div class="row padding-bottom-20px threeCol">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Estimated Expense Amount(INR) <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control " id="EstimatedExpenseAmount" style="padding-top: 10px;" onchange="checkForThousand()" onkeypress="return isNumberKey(event)">
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Expense Reason <span class="required">*</span>
+                        </label>
+                        <textarea type="text" class="form-control " id="ExpenseReason" style="padding-top: 10px; width: -webkit-fill-available;"
+                                maxlength="255"></textarea>
+                    </div>
+                    <!-- <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Project / Thread / Initiative
+                            Lead<span class="required">*</span></label>
+                        <div id="ThreadInitiativeLead" style="width: auto !important; margin-right: 0px;"></div>
+                        <inut type="hidden" id="ThreadInitiativeLeadId" />
+                    </div> -->
+
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Project / Thread / Initiative Lead<span class="required">*</span>
+                        </label>
+                        <div id="peoplepicker" style="width: auto !important; margin-right: 0px;"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+		
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle">Approver Details</div>
+            <div class="panel-body panel-body-padding">
+                <div class="row threeCol">
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Talent
+                            Group Leader<span class="required">*</span><i data-helpinfo="TGL" data-placement="right"
+                                data-original-title="Talent Group Leaders (TGL) for your respective Offerings" class="fa fa-question-circle"
+                                aria-hidden="true" style="padding-left: 15px;font-size: 17px;"></i></label>
+                        <select class="form-control dropdownHight height-40px" id="talentGroupLeaderList" onchange="">
+                            <option value="0">Select an option</option>
+
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Offering
+                            Lead<span class="required">*</span></label>
+                        <input type="text" class="form-control " id="offeringLead" style="padding-top: 10px;" disabled>
+                        <inut type="hidden" id="offeringLeadId" />
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Portfolio Lead <span class="required">*</span></label>
+                        <input type="text" class="form-control " id="portfolioLead" style="padding-top: 10px;" disabled>
+                        <input type="hidden" id="portfolioLeadId" value="">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent uploadpanel">
+            <div class="panel-heading panelHeadingStyle">Upload Documents</div>
+            <div class="panel-body panel-body-padding">
+                <!-- <div class="row" style="padding-left:20px">
+                    <label class="col-form-label paddingTop paddingBottom font-size15px" style="padding-bottom: 10px !important;">
+                        Please ensure that you upload all the supporting documents related to the Expense</label>
+                </div> -->
+
+                <div class="row">
+                    <div class="col-md-11" style="padding-left:20px">
+                        <div>
+                            <label class="col-form-label font-size15px">
+                                <!-- <input data-field="ChecklistItems" type="checkbox"  id="approvalcheckbox" checked="checked"
+                                    value="chk1" />   -->
+                                    Please ensure that you upload all the supporting documents related to the Expense Approval from Project/Thread/Initiative Lead for this expense <span class="required">*</span>
+                             </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 attachments" style="padding:10px">
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-8" style="padding:10px">
+                        <input type="file" id="uploadapproval1" class="uploadElement" style="display:inline-block;width:70%" accept="application/pdf" />
+                        <span style="display:none;color: red;vertical-align: middle;" class="glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8" style="padding:10px">
+                        <input type="file" id="uploadapproval2" class="uploadElement" style="display:inline-block;width:70%" accept="application/pdf" />
+                        <span style="display:none;color: red;vertical-align: middle;" class="glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8" style="padding:10px">
+                        <input type="file" id="uploadapproval3" class="uploadElement" style="display:inline-block;width:70%" accept="application/pdf" />
+                        <span style="display:none;color: red;vertical-align: middle;" class="glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8" style="padding:10px">
+                        <input type="file" id="uploadapproval4" class="uploadElement" style="display:inline-block;width:70%" accept="application/pdf" />
+                        <span style="display:none;color: red;vertical-align: middle;" class="glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8" style="padding:10px">
+                        <input type="file" id="uploadapproval5" class="uploadElement" style="display:inline-block;width:70%" accept="application/pdf" />
+                        <span style="display:none;color: red;vertical-align: middle;" class="glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                </div>
+                <div class="row" style="padding:10px">
+                    <i style="font-size: 1rem">* Maximum of 5 PDF files can be selected with each file size not more
+                        than 3MB.</i>
+                </div>
+            </div>
+        </div>		
+		
+        <div class="row width-71percent margin-left-9percent" style="margin-left: 19%">
+            <div class="rightAlign ">
+                <button type="button"
+                    class="btn btn-primary float-right btnSubmit height-70px width-30percent btn margin-left-15px"
+                    id="btnSubmit">
+                    Submit
+                </button>
+                <button type="button"
+                    class="btn btn-primary float-right buttonsBackgorund width-30percent btnSaveLater "
+                    id="btnSaveForLater">
+                    Save for Later
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+   
+
+<!-- css Loader -->
+<style>
+    .usiTransferElements {
+        display: none;
+    }
+
+    .tooltip-inner {
+        max-width: 300% !important;
+        width: 300%;
+    }
+
+    .businesscaselabel .tooltip-inner {
+        width: 100%;
+    }
+
+    .required {
+        color: red;
+    }
+
+    .disabledfield {
+        background: #eee !important;
+    }
+
+    .disabledfield .sp-peoplepicker-topLevel {
+        background: #eee !important;
+    }
+
+
+    .disabledfield .sp-peoplepicker-delImage {
+        display: none;
+    }
+
+    /* .disabledfield .sp-peoplepicker-editorInput{
+            display:none;
+        } */
+
+
+
+    /* Absolute Center Spinner */
+    .loading {
+        position: fixed;
+        z-index: 999;
+        height: 2em;
+        width: 2em;
+        overflow: visible;
+        margin: auto;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+
+    /* Transparent Overlay */
+    .loading:before {
+        content: '';
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    /* :not(:required) hides these rules from IE9 and below */
+    .loading:not(:required) {
+        /* hide "loading..." text */
+        font: 0/0 a;
+        color: transparent;
+        text-shadow: none;
+        background-color: transparent;
+        border: 0;
+    }
+
+    .loading:not(:required):after {
+        content: '';
+        display: block;
+        font-size: 10px;
+        width: 1em;
+        height: 1em;
+        margin-top: -0.5em;
+        -webkit-animation: spinner 1500ms infinite linear;
+        -moz-animation: spinner 1500ms infinite linear;
+        -ms-animation: spinner 1500ms infinite linear;
+        -o-animation: spinner 1500ms infinite linear;
+        animation: spinner 1500ms infinite linear;
+        border-radius: 0.5em;
+        -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+        box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+    }
+
+    /* Animation */
+
+    @-webkit-keyframes spinner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    @-moz-keyframes spinner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    @-o-keyframes spinner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes spinner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+</style>
+<script type="text/javascript">
+
+    var collListItem;
+    var existingId;
+    var newRequestItem;
+    var newStatusItem;
+    var siteUrl = _spPageContextInfo.webServerRelativeUrl;
+    var fileName = "";
+    var fullDate = new Date();
+    var twoDigitDate = ((fullDate.getDate().length + 1) === 2) ? '0' + (fullDate.getDate()) : (fullDate.getDate());
+    var twoDigitMonth = ((fullDate.getMonth().length + 1) === 1) ? (fullDate.getMonth() + 1) : '0' + (fullDate.getMonth() + 1);
+    var currentDate = twoDigitMonth + "/" + twoDigitDate + "/" + fullDate.getFullYear();
+
+    $(document).ready(function () {
+        JSRequest.EnsureSetup();
+        var Id = JSRequest.QueryString["itemId"];
+        if (Id !== undefined && Id !== null) {
+            //update request in edit
+            mapExistingDataToForm(Id);
+        }
+        if (!window.FileReader) {
+            alert('This browser does not support the FileReader API.');
+        }
+    });
+</script>

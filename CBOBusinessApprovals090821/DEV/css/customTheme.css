@@ -1,0 +1,112 @@
+.panel-default>.panel-heading {
+	background-color: #86BC25 !important; 
+	color: white;
+    border-color: #ddd;
+}
+
+.panel{
+	width: 60%;
+	display:inline-block;  
+	text-align:left;
+}
+
+.paddingTop{
+	padding-top : 10px;
+}
+
+.containerAlignWrapper{
+	text-align:center;
+}
+
+.panel-body-padding {
+    padding: 15px !important;
+}
+
+.panel-body {
+    padding: 0px;
+}
+
+.error {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  padding:1px 20px 1px 20px;
+}
+
+.panel-default {
+    border-color: #ddd;
+	box-shadow: 1px 1px #ddd;
+    border: solid 1px #86BC25;
+}
+
+.btnTransferType,.btnRelocationCategory,.btnSaveLater {
+  background-color: white; 
+  color: rgba(0, 163, 224, 1); 
+  border: 1px solid rgba(0, 163, 224, 1);
+}
+
+.btnSubmit{
+	background-color: rgba(0, 163, 224, 1); 
+	color: white; 
+}
+
+.practitionerInput, input {
+  outline: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  border-bottom: 1px solid #ddd !important;
+  box-shadow: none !important;
+}
+
+.margin-left-15px{
+	margin-left: 15px;
+}
+
+.float-right{
+	float:right !important;
+}
+
+.margin-left-9percent{
+	margin-left:9%;
+}
+
+.padding-bottom-20px{
+	padding-bottom: 20px;
+}
+
+.width-71percent{
+	width : 71%;
+}
+
+.backNavigate{
+	font-size: 30px;
+    cursor: pointer;
+    color: rgba(0, 163, 224, 1);
+    padding-left: 50px;
+    padding-top: 12px;
+}
+
+#uploadVisaDocuments{
+	width: 50% !important;
+}
+
+.txt-new-Request{
+	 font-size: 20px !important; 
+	 font-weight: bold;
+	 color: black; 
+	 font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; */
+     font-size: 14px; 
+     line-height: 1.42857143; 
+     color: #333; 
+	 padding-left: 0%;
+    padding-top: 10px;
+    margin-bottom: -10px;
+	text-align:center;
+}
+
+.error {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  padding:1px 20px 1px 20px;
+}

@@ -1,0 +1,13 @@
+button{
+    display:none !important;
+    visibility: hidden !important;
+}
+
+input[type="submit"], input[Type="button"]{
+    display:none !important;
+    visibility: hidden !important;
+}
+
+#lblNotice{
+    color: crimson !important;
+}

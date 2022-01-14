@@ -1,0 +1,676 @@
+﻿<div class="loading" style="display:none">Loading</div>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css?v=3.12">
+<!-- <link rel="stylesheet" href="../SiteAssets/css/custom.css">  -->
+<link type="text/css" href="../SiteAssets/css/PageCommon.css" rel="stylesheet" />
+<script src="../siteassets/js/controllers/common.js?v=0.2"></script>
+<link rel="stylesheet" href="../SiteAssets/css/customThemeCertification.css?v=1.25">
+<link rel="stylesheet" href="../SiteAssets/js/libs/jqueryUI/jquery-ui.min.css">
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>-->
+<!--<link rel="stylesheet" href="../SiteAssets/css/bootstrap-combined.min.css?v=3.72">-->
+<!--<script src="../SiteAssets/js/controllers/CertificationRequest.js?v=3.4"></script>-->
+
+<script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment-with-locales.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="../SiteAssets/js/libs/bootbox.min.js"></script>
+
+<script src="../_layouts/15/1033/strings.js"></script>
+<script src="../_layouts/15/clienttemplates.js"></script>
+<script src="../_layouts/15/clientforms.js"></script>
+<script src="../_layouts/15/clientpeoplepicker.js"></script>
+<script src="../_layouts/15/autofill.js"></script>
+<script src="../_layouts/15/sp.core.js"></script>
+
+<script>
+    $('#BSbtninfo').filestyle({
+        buttonName: 'btn-info',
+        buttonText: ' Select a File'
+    });
+</script>
+<style>
+    .instructionPanel {
+        font-size: smaller;
+        font-weight: 300 !important;
+    }
+
+    .readOnlySelect {
+        width: 115%
+        /* This hides the arrow icon */
+        ;
+        background-color: transparent
+        /* This hides the background */
+        ;
+        background-image: none;
+        -webkit-appearance: none
+        /* Webkit Fix */
+        ;
+        border: none;
+        box-shadow: none;
+        padding: 0.3em 0.5em;
+        font-weight: bold;
+        color: black;
+    }
+
+    .instruction {
+        font-weight: 700 !important;
+        padding-top: 5px !important;
+    }
+
+    .dol-footer {
+        font-size: 11px !important;
+    }
+
+        .dol-footer .container {
+            width: 100% !important;
+        }
+
+
+    .bootbox-close-button {
+        min-width: 15px !important;
+    }
+
+
+    .panelHeadingStyle {
+        height: 30px !important;
+        padding-top: 15px !important;
+        background-color: #86BC25 !important;
+        color: white !important;
+        font-weight: bold;
+        font-size: medium;
+        font-style: normal;
+        padding-left: 5%;
+        text-align: left;
+    }
+
+    .container-fluid.dol-footer.s4-notdlg {
+        margin-top: 0px !important;
+    }
+
+    .table thead tr th {
+        vertical-align: middle;
+    }
+
+    th {
+        background-color: #86BC25 !important;
+        Color: white;
+    }
+
+    th,
+    td {
+        width: 100px;
+        /*text-align: center;*/
+    }
+
+    .height-30px {
+        height: 30px
+    }
+
+    .centerAlign {
+        text-align: center
+    }
+
+
+    .width-27percent {
+        width: 27%;
+    }
+
+    .width-60percent {
+        width: 50%;
+    }
+
+    .width-18percent {
+        width: 18% !important;
+    }
+
+    .width-100percent {
+        width: 100% !important;
+    }
+
+    .width-fitcontent {
+        width: fit-content !important;
+    }
+
+    .gfg {
+        border-collapse: separate;
+        /*border-spacing: 0 15px;*/
+    }
+
+    .width-110px {
+        width: 16% !important;
+    }
+
+    .padding-0px {
+        padding: 0px !important;
+    }
+
+    .col-form-label {
+        margin-left: 20px !important;
+        /* width: 13% !important;*/
+        padding-left: 5px !important;
+        font-weight: 700 !important;
+    }
+
+    .ui-datepicker-trigger {
+        height: 20px !important;
+    }
+
+    .error-label {
+        color: #a94442 !important;
+        background-color: #f2dede !important;
+        border-color: #ebccd1 !important;
+        /*  padding: 1px 20px 1px 20px !important;*/
+    }
+
+    .sp-peoplepicker-editorInput {
+        margin-left: 2px !important;
+        width: 230px !important;
+        border: 0px !important;
+    }
+
+    .sp-peoplepicker-topLevel {
+        width: 80% !important;
+    }
+
+    #peoplepicker_TopSpan {
+        width: 85% !important;
+    }
+</style>
+
+<div class="container divTransferTable">
+    <div class="containerAlignWrapper">
+
+        <div class="panel panel-border-none width-90percent">
+            <div class="panel-body panel-body-padding">
+                <div class="row">
+                    <div class="col text-center">
+                        <h3 id="pageTitle">External Certification Application</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent instructionPanel" id="divInstructionsDetail">
+            <div class="panel-heading panelHeadingStyle" style="padding-left: 25px !important;">
+                <span>Instructions</span>
+            </div>
+            <div class="panel-body panel-body-padding" style="padding-top: 0px !important;">
+                <p class="instruction">
+                    External certifications are a strategic enabler for Deloitte’s business partnerships and client relationships. As you prepare to apply for external certification, take note of the following before submitting the certification request.
+                </p>
+                <ul>
+                    <li class="instruction">
+                        Refer to the list of <a href="/sites/USICBOPortal/BusinessApproval/Shared%20Documents/FY22_Certification%20List.pdf?Web=1" target="_blank">approved certifications</a> for FY22 here. Please note, that the certifications are aligned based on your Offering & Talent Group
+                    </li>
+                    <li class="instruction">
+                        Please reach out to your Offering Learning Champion
+                        <i data-helpinfo="Offering Learning Champions" data-placement="right"
+                           data-original-title="Offering Learning Champions" class="fa fa-question-circle"
+                           aria-hidden="true" style="font-size: 17px;"></i>
+                        in case you do not find the certification you have opted for
+                    </li>
+                    <li class="instruction">
+                        For certifications that are common across Talent Groups:
+                        Please ensure that you select your Talent Group from the drop down before submitting the request. Reach out to your Project Manager in case you are not aware of your Talent Group
+                    </li>
+                    <li class="instruction">
+                        <span style="color:darkmagenta;">
+                            Ensure you have a strong business case citing your need to be certified.
+                            Refer to help "(?)" for more details
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle" style="padding-left: 25px !important;">
+                <span>Requestor Details</span>
+            </div>
+            <div class="panel-body panel-body-padding" style="padding-top: 10px !important;">
+                <div class="form-group row">
+                    <div class="col-sm-2 padding-0px width-18percent">
+                        <label class="col-form-label form-control border-none width-fitcontent">
+                            Requestor Email ID<span class="required">*</span>
+                        </label>
+                    </div>
+                    <div class="col-sm-4 width-30Percent padding-0px">
+                        <input type="text" class="form-control " id="practitionerEmailId" style="padding-top: 10px;" disabled>
+                    </div>
+
+                    <div class="col-sm-2 padding-0px width-18percent">
+                        <label class="col-form-label form-control border-none width-fitcontent">
+                            Requestor Name<span class="required">*</span>
+                        </label>
+                    </div>
+                    <div class="col-sm-4 width-30Percent padding-0px">
+                        <input type="text" class="form-control " id="practitionerName" style="padding-top: 10px;" disabled>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2 padding-0px width-18percent">
+                        <label class="col-form-label form-control border-none width-fitcontent">
+                            Requestor Level<span class="required">*</span>
+                        </label>
+                    </div>
+                    <div class="col-sm-4 width-30Percent padding-0px">
+                        <input type="text" class="form-control " id="practitionerLevel" style="padding-top: 10px;" disabled>
+                    </div>
+
+                    <div class="col-sm-2 padding-0px width-18percent">
+                        <label class="col-form-label form-control border-none width-fitcontent">
+                            Offering<span class="required">*</span>
+                        </label>
+                    </div>
+                    <div class="col-sm-4 width-30Percent padding-0px">
+                        <input type="text" class="form-control " id="Offering" style="padding-top: 10px;" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent display-none" id="divRequestDetail">
+            <div class="panel-heading panelHeadingStyle" style="padding-left: 25px !important;">
+                <span>Request Details</span>
+            </div>
+            <div class="panel-body panel-body-padding" style="padding-top: 0px !important;">
+                <div class="form-group row" style="margin-top: 0px !important;">
+                    <div class="col-sm-12 text-center" style="padding:0px !important;">
+                        <label id="errorRequestDetail" class="errorLabel" style="width: 100% !important"></label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2 padding-0px width-18percent">
+                        <label for="certificationList" id="lblCertificationList"
+                               class="col-form-label form-control border-none width-fitcontent">
+                            Certification<span class="required">*</span>
+                        </label>
+                    </div>
+                    <div class="col-sm-4 width-30Percent padding-0px">
+                        <select id="selCertificationList" class="form-control width-80Percent">
+                            <option value="0">Select the certification</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2 padding-0px width-18percent">
+                        <label for="talentGroupList" id="lblTalentGroupList"
+                               class="col-form-label  form-control border-none width-fitcontent">
+                            Talent Group<span class="required">*</span>
+                        </label>
+                    </div>
+                    <div class="col-sm-4 width-30Percent padding-0px">
+                        <select disabled="disabled" id="selTalentGroupList" class="readOnlySelect form-control width-80Percent">
+                            <option value="0">Select the certification</option>
+                        </select>
+                    </div>
+
+                    <!-- Removing this as this is redundant
+                    <div class="col-sm-2 padding-0px width-18percent">
+                        <label for="selOfferingList" id="lblOfferingList"
+                            class="col-form-label form-control border-none width-fitcontent">
+                            Offering<span class="required">*</span>
+                        </label>
+                    </div>
+                    <div class="col-sm-4 width-30Percent padding-0px">
+                        <select disabled="disabled" id="selOfferingList" class="readOnlySelect form-control width-80Percent">
+                            <option value="0">Select the certification</option>
+                        </select>
+                    </div>   -->
+                </div>
+                <!-- Removing Capability Dropdown as it is not required.
+
+                <div class="form-group row">
+                    <div class="col-sm-2 padding-0px width-18percent">
+                        <label for="talentGroupList" id="lblTalentGroupList"
+                            class="col-form-label  form-control border-none width-fitcontent">
+                            Talent Group<span class="required">*</span>
+                        </label>
+                    </div>
+                    <div class="col-sm-4 width-30Percent padding-0px">
+                        <select disabled="disabled" id="selTalentGroupList" class="readOnlySelect form-control width-80Percent">
+                            <option value="0">Select the certification</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2 padding-0px width-18percent">
+                        <label for="selCapabilityList" id="lblCapabilityList"
+                            class="col-form-label form-control border-none width-fitcontent">
+                            Capability<span class="required">*</span>
+                        </label>
+                    </div>
+                    <div class="col-sm-4 width-30Percent  padding-0px">
+                        <select disabled="disabled" id="selCapabilityList" class="readOnlySelect form-control width-80Percent">
+                            <option value="0">Select the certification</option>
+                        </select>
+                    </div>
+                </div>     -->
+                <!-- Introducing Manager approval workflow and business justification -->
+
+                <div class="form-group row">
+                    <div class="col-sm-2 padding-0px width-18percent">
+                        <label for="txtProjectManager" id="lblPMName"
+                               class="col-form-label  form-control border-none width-fitcontent">
+                            Project Manager/Coach<span class="required">*</span>
+                            <i data-helpinfo="PM" data-placement="right"
+                               data-original-title="PM" class="fa fa-question-circle"
+                               aria-hidden="true" style="padding-left: 15px;font-size: 17px;"></i>
+                        </label>
+                    </div>
+                    <div class="col-sm-4 width-30Percent padding-0px">
+                        <div id="peoplepicker" style="width: auto !important; margin-right: 0px;"
+                             class="width-80Percent"></div>
+                    </div>
+                    <div class="col-sm-2 padding-0px width-18percent">
+                        <label for="txtAnticipatedCompletionDate" id="lblAnticipatedCompletionDate"
+                               class="col-form-label  form-control border-none width-fitcontent">
+                            Anticipated Completion Date<span class="required">*</span>
+                        </label>
+                    </div>
+                    <div class="col-sm-4 width-30Percent padding-0px">
+                        <input type="text" id="txtAnticipatedCompletionDate" class="form-control" readonly="true"
+                               style="width:85% !important">
+                    </div>
+                </div>
+
+                <!-- End -->
+
+                <div class="form-group row">
+                    <div class="col-sm-6 padding-0px width-80percent ">
+                        <label for="txtBusinessJustification" id="lblBussJus"
+                               class="col-form-label  form-control border-none width-fitcontent">
+                            Business Justification (min. 100 chars & max. 600 chars)<span class="required">*</span>
+                            <i data-helpinfo="Business Justification" data-placement="right"
+                               data-original-title="Business Justification" class="fa fa-question-circle"
+                               aria-hidden="true" style="padding-left: 15px;font-size: 17px;"></i>
+                        </label>
+                    </div>
+                    <div class="col-sm-6 padding-0px">
+                        <textarea id="txtBusinessJustification" class="form-control  width-80Percent" rows="3"
+                                  placeholder="Business Justification" onkeydown="limitTextOnKeyUpDown(this, 600);"
+                                  onkeyup='limitTextOnKeyUpDown(this, 600);'></textarea>
+                        <p id="pcountdown">600 chars are left</p>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-12  text-center">
+                        <input type="hidden" id="hdnCertificationRequestRowId" value="">
+                        <button type="button" class="margin-10px btn btn-primary" style="height:2.5em !important"
+                                id="btnSaveRequestDetail">
+                            Submit
+                        </button>
+                        <button type="button" class="margin-10px btn btn-primary" style="height:2.5em !important"
+                                id="btnCancelRequestDetail">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default width-90percent display-none" id="divCompletionDetail">
+            <div class="panel-heading panelHeadingStyle"><span>Completion Details</span></div>
+            <div class="panel-body panel-body-padding" style="padding-top: 0px !important;">
+                <div class="form-group row" style="margin-top: 0px !important;">
+                    <div class="col-sm-12  text-center" style="padding:0px !important;">
+                        <label id="errorCompletionDetail" class="errorLabel" style="width: 100% !important"></label>
+                    </div>
+                </div>
+                <div class="form-group row ">
+                    <input type="hidden" id="hdnApprovalStatus" value="">
+                    <input type="hidden" id="hdnTGLApprovalStatus" value="">
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-2 width-18percent">
+                        <label for="selCompletionStatus" id="lblCompletionStatus"
+                               class="col-form-label  form-control border-none width-fitcontent">
+                            Completion Status<span class="required">*</span>
+                        </label>
+                    </div>
+                    <div class="col-sm-4 width-30Percent padding-0px">
+                        <select id="selCompletionStatus" class="form-control">
+                            <option value="0">Select an option</option>
+                            <option value="Not Started">Not Started</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2 width-18percent">
+                        <label for="staticEmail" id="lblCompletionDate"
+                               class="col-form-label  form-control border-none width-fitcontent">
+                            Completion Date<span class="required">*</span>
+                        </label>
+                    </div>
+                    <div class="col-sm-4 width-30Percent padding-0px">
+                        <div class="input-append">
+                            <input type="text" id="txtCompletionDate" class="form-control" readonly="true">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-2 width-18percent">
+                        <label for="staticEmail" id="lblCertificate"
+                               class="col-form-label  form-control border-none width-fitcontent">
+                            Certificate<span class="required">*</span>
+                        </label>
+                    </div>
+                    <div class="col-sm-4 width-30Percent padding-0px">
+                        <div class="file btn btn-lg btn-primary divFileUpload" id="divUplCertification">
+                            Browse
+                            <input type="file" id="uplCertificate" name="file" class="inputFileUpload"
+                                   accept="application/pdf" />
+                        </div>
+                        <a for='uplCertificate' href='#' id="uplCertificateName"></a>
+                    </div>
+                    <div class="col-sm-2 width-18percent">
+                        <label for="WBSCode" class="col-form-label form-control border-none width-fitcontent">
+                            WBS Code<span class="required">*</span>
+                        </label>
+                    </div>
+                    <div class="col-sm-4 width-30Percent padding-0px">
+                        <label id="WBSCode" class="form-control border-none" style="width:95%;"></label>
+                        <input type="hidden" id="WBSCodeId">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2 width-18percent">
+                        <label class="col-form-label width-18percent form-control border-none">
+
+                        </label>
+                    </div>
+                    <div class="col-sm-4 width-30Percent padding-0px">
+
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="col-form-label form-control border-none" style="width:80% !important;">
+                            Use this code in DTE for reimbursement
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-12  text-center">
+                        <input type="hidden" id="hdnCertificationRequestRowId" value="">
+                        <button type="button" class="margin-10px btn btn-primary" style="height:2.5em !important"
+                                id="btnSaveCompletionDetail">
+                            Submit
+                        </button>
+                        <button type="button" class="margin-10px btn btn-primary" style="height:2.5em !important"
+                                id="btnCancelCompletionDetail">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- css Loader -->
+<style>
+    .usiTransferElements {
+        display: none;
+    }
+
+    .tooltip-inner {
+        max-width: 300% !important;
+        width: 300%;
+    }
+
+    .businesscaselabel .tooltip-inner {
+        width: 100%;
+    }
+
+    .required {
+        color: red;
+    }
+
+    .disabledfield {
+        background: #eee !important;
+    }
+
+        .disabledfield .sp-peoplepicker-topLevel {
+            background: #eee !important;
+        }
+
+
+        .disabledfield .sp-peoplepicker-delImage {
+            display: none;
+        }
+
+    /* .disabledfield .sp-peoplepicker-editorInput{
+                    display:none;
+                } */
+
+
+
+    /* Absolute Center Spinner */
+    .loading {
+        position: fixed;
+        z-index: 999;
+        height: 2em;
+        width: 2em;
+        overflow: visible;
+        margin: auto;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+
+        /* Transparent Overlay */
+        .loading:before {
+            content: '';
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* :not(:required) hides these rules from IE9 and below */
+        .loading:not(:required) {
+            /* hide "loading..." text */
+            font: 0/0 a;
+            color: transparent;
+            text-shadow: none;
+            background-color: transparent;
+            border: 0;
+        }
+
+            .loading:not(:required):after {
+                content: '';
+                display: block;
+                font-size: 10px;
+                width: 1em;
+                height: 1em;
+                margin-top: -0.5em;
+                -webkit-animation: spinner 1500ms infinite linear;
+                -moz-animation: spinner 1500ms infinite linear;
+                -ms-animation: spinner 1500ms infinite linear;
+                -o-animation: spinner 1500ms infinite linear;
+                animation: spinner 1500ms infinite linear;
+                border-radius: 0.5em;
+                -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+                box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+            }
+
+    /* Animation */
+
+    @-webkit-keyframes spinner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    @-moz-keyframes spinner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    @-o-keyframes spinner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes spinner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+</style>
+<script src="../SiteAssets/js/controllers/CertificationRequest.js?v=2.71"></script>
+
+<head>
+    <title></title>
+</head>

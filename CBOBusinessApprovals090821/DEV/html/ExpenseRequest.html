@@ -1,0 +1,327 @@
+<div class="loading" style="display:none">Loading&#8230;</div>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="../SiteAssets/css/custom.css">  -->
+<link rel="stylesheet" href="../SiteAssets/css/customTheme.css">
+<link rel="stylesheet" href="../SiteAssets/js/libs/jqueryUI/jquery-ui.min.css">
+<script src="../SiteAssets/js/controllers/ExpenseRequest.js?v=0.49"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment-with-locales.min.js"></script>
+
+
+<!-- <script src="../_layouts/15/sp.runtime.js"></script>
+<script src="../_layouts/15/sp.js"></script> -->
+<script src="../_layouts/15/1033/strings.js"></script>
+<script src="../_layouts/15/clienttemplates.js"></script>
+<script src="../_layouts/15/clientforms.js"></script>
+<script src="../_layouts/15/clientpeoplepicker.js"></script>
+<script src="../_layouts/15/autofill.js"></script>
+<script src="../_layouts/15/sp.core.js"></script>
+
+<style>
+    .dol-footer{
+        font-size:11px!important;
+    }
+    .dol-footer .container{
+        width:100%!important;
+    }
+
+    .error {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  padding:1px 20px 1px 20px;
+}
+
+.bootbox-close-button{
+   min-width: 15px!important;
+}
+[type="file"]{
+height:auto!important;
+}
+.panelHeadingStyle{
+    height:14px!important;
+    padding-top:2px!important;
+}
+
+.container-fluid.dol-footer.s4-notdlg{
+    margin-top:0px!important;
+}
+</style>
+
+<div class="container divTransferTable">
+    <div class="containerAlignWrapper">
+        <div class="panel panel-default width-90percent" style="border:0px;box-shadow: 0px 0px">
+            <div class="txt-new-Request" style="padding-left:0px">
+                <span id="requestTypeidentifier"></span>
+            </div>
+        </div>
+        <div class="panel panel-default width-90percent">
+            <div class="panel-heading panelHeadingStyle"><i class="glyphicon glyphicon-plus expander" onclick="togglePanel(this)"></i>&nbsp;Practitioner
+                Details</div>
+            <div class="panel-body panel-body-padding" style="display:none">
+                <div class="row">
+                    <div class="col-sm-4 ">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Practitioner
+                            Email ID <span class="required">*</span></label>
+                        <input type="text" class="form-control " id="practitionerPersonnelID" style="padding-top: 10px;"
+                            disabled>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4 ">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Practitioner
+                            Name <span class="required">*</span></label>
+                        <input type="text" class="form-control " id="practitionerNameTransfer" style="padding-top: 10px;"
+                            disabled>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 ">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Practitioner Level <span class="required">*</span></label>
+                        <input type="text" class="form-control " id="practitionerLevelTransfer" style="padding-top: 10px;"
+                            disabled>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4 ">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px"> USI
+                            Base Location <span class="required">*</span></label>
+                        <select class="form-control dropdownHight disableElement" id="USIBaseLocation" disabled>
+                            <option value="0">Select an option</option>
+                            <option value="Hyderabad">Hyderabad</option>
+                            <option value="Bengaluru">Bengaluru</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Gurgaon">Gurgaon</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 ">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Portfolio <span class="required">*</span></label>
+                        <input type="text" class="form-control portfolioText" id="portfolio" style="padding-top: 10px;"
+                            disabled>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4 ">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Offering <span class="required">*</span></label>
+                        <input type="text" class="form-control " id="Offering" style="padding-top: 10px;" disabled>
+                    </div>
+                </div>
+                <div class="row usiTransferElements">
+                    <div class="col-sm-4 ">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">
+                            Date of Hire <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="dateOfHire" placeholder="mm/dd/yyyy" style="padding-top: 10px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default width-90percent">
+
+            <div class="panel-heading panelHeadingStyle">Expense Request</div>
+            <div class="panel-body panel-body-padding">
+                <div class="row">
+                    <div class="col-sm-4 ">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Expense Type
+						<span class="required">*</span></label>
+                        <select class="form-control dropdownHight height-40px" id="expenseTypeList" onchange="">
+                            <option disabled selected value> -- select an option -- </option>
+                        </select>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4 ">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Eligibility Criteria
+						<span class="required">*</span></label>
+						<textarea class="form-control dropdownHight height-40px" id="eligibilityCriteriaDetails" readonly="readonly"></textarea>
+                    </div>
+                </div>
+				
+				<div class="row">
+                    <div class="col-sm-4 ">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Eligibility Limit
+						<span class="required">*</span></label>
+                        <textarea class="form-control dropdownHight height-40px" id="eligibilityLimitDetails" readonly="readonly"></textarea>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4 ">
+                        <label class="col-form-label paddingTop paddingBottom font-size15px">Applicable To
+						<span class="required">*</span></label>
+                        <textarea class="form-control dropdownHight height-40px" id="applicableToDetails" readonly="readonly"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+<!-- css Loader -->
+<style>
+
+    .usiTransferElements{
+    display: none;
+}
+
+    .tooltip-inner {
+    max-width: 300%!important;
+    width: 300%;
+}
+
+.businesscaselabel .tooltip-inner {    
+    width: 100%;
+}
+
+    .required{
+        color:red;
+    }
+
+    .disabledfield{
+        background: #eee!important;
+        
+    }
+    .disabledfield .sp-peoplepicker-topLevel{
+        background: #eee!important;
+    }
+    
+
+    .disabledfield .sp-peoplepicker-delImage{
+        display:none;
+    }
+
+    /* .disabledfield .sp-peoplepicker-editorInput{
+        display:none;
+    } */
+
+
+
+    /* Absolute Center Spinner */
+        .loading {
+            position: fixed;
+            z-index: 999;
+            height: 2em;
+            width: 2em;
+            overflow: visible;
+            margin: auto;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+    
+        /* Transparent Overlay */
+        .loading:before {
+            content: '';
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+    
+        /* :not(:required) hides these rules from IE9 and below */
+        .loading:not(:required) {
+            /* hide "loading..." text */
+            font: 0/0 a;
+            color: transparent;
+            text-shadow: none;
+            background-color: transparent;
+            border: 0;
+        }
+    
+        .loading:not(:required):after {
+            content: '';
+            display: block;
+            font-size: 10px;
+            width: 1em;
+            height: 1em;
+            margin-top: -0.5em;
+            -webkit-animation: spinner 1500ms infinite linear;
+            -moz-animation: spinner 1500ms infinite linear;
+            -ms-animation: spinner 1500ms infinite linear;
+            -o-animation: spinner 1500ms infinite linear;
+            animation: spinner 1500ms infinite linear;
+            border-radius: 0.5em;
+            -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+            box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+        }
+    
+        /* Animation */
+    
+        @-webkit-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+    
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    
+        @-moz-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+    
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    
+        @-o-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+    
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    
+        @keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+    
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    </style><head><title></title>
+                    <script>var w=window;if(w.performance||w.mozPerformance||w.msPerformance||w.webkitPerformance){var d=document;AKSB=w.AKSB||{},AKSB.q=AKSB.q||[],AKSB.mark=AKSB.mark||function(e,_){AKSB.q.push(["mark",e,_||(new Date).getTime()])},AKSB.measure=AKSB.measure||function(e,_,t){AKSB.q.push(["measure",e,_,t||(new Date).getTime()])},AKSB.done=AKSB.done||function(e){AKSB.q.push(["done",e])},AKSB.mark("firstbyte",(new Date).getTime()),AKSB.prof={custid:"282181",ustr:"",originlat:"0",clientrtt:"4",ghostip:"183.82.12.165",ipv6:false,pct:"10",clientip:"124.123.179.153",requestid:"2e90293f",region:"26801",protocol:"h2",blver:14,akM:"dsca",akN:"ae",akTT:"O",akTX:"1",akTI:"2e90293f",ai:"202055",ra:"false",pmgn:"",pmgi:"",pmp:"",qc:""},function(e){var _=d.createElement("script");_.async="async",_.src=e;var t=d.getElementsByTagName("script"),t=t[t.length-1];t.parentNode.insertBefore(_,t)}(("https:"===d.location.protocol?"https:":"http:")+"//ds-aksb-a.akamaihd.net/aksb.min.js")}</script>
+                    </head>
